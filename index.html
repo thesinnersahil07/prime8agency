@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prime8Agency — AI-Powered Creative Growth Agency</title>
+<meta name="description" content="Prime8Agency helps eCommerce brands scale through AI-powered ad creatives, creator collaborations, performance marketing, and digital experiences." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #04040a;
+    --bg2: #07071200;
+    --blue: #3b82f6;
+    --blue-bright: #60a5fa;
+    --blue-glow: #2563eb;
+    --violet: #7c3aed;
+    --violet-light: #a78bfa;
+    --chrome: #c8d6e5;
+    --chrome-dim: #8899aa;
+    --white: #f0f4ff;
+    --white-dim: #9aa5b8;
+    --border: rgba(99,130,180,0.15);
+    --glass: rgba(255,255,255,0.03);
+    --glass2: rgba(60,100,200,0.07);
+    --card-bg: rgba(8,12,28,0.7);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(59,130,246,0.3); color: #fff; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #04040a; }
+  ::-webkit-scrollbar-thumb { background: var(--blue-glow); border-radius: 2px; }
+
+  /* ── CANVAS PARTICLES ── */
+  #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .45; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    background: rgba(4,4,10,0.7);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border);
+    transition: background .3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-img {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(99,130,246,0.4);
+    box-shadow: 0 0 12px rgba(59,130,246,0.35);
+  }
+  .nav-logo-text {
+    font-family: var(--font-display);
+    font-weight: 800; font-size: 1.05rem; letter-spacing: .04em;
+    color: var(--white);
+    line-height: 1;
+  }
+  .nav-logo-text span { color: var(--blue-bright); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: .82rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--chrome-dim); text-decoration: none;
+    transition: color .2s;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--blue-glow), var(--violet));
+    color: #fff; border: none; cursor: pointer;
+    font-family: var(--font-display); font-size: .8rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 9px 22px; border-radius: 40px;
+    box-shadow: 0 0 20px rgba(59,130,246,0.4);
+    transition: box-shadow .2s, transform .2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { box-shadow: 0 0 35px rgba(59,130,246,0.7); transform: scale(1.04); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+  .mobile-menu {
+    display: none; position: fixed; inset: 70px 0 0 0; z-index: 99;
+    background: rgba(4,4,10,0.97); backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+    color: var(--white); text-decoration: none; letter-spacing: .05em;
+    transition: color .2s;
+  }
+  .mobile-menu a:hover { color: var(--blue-bright); }
+  .mobile-menu .nav-cta { font-size: 1rem; padding: 14px 36px; }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--blue-bright); font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 20px; height: 1px;
+    background: var(--blue-bright);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -.02em; color: var(--white);
+  }
+  .section-title .accent { color: var(--blue-bright); }
+  .section-sub {
+    color: var(--white-dim); font-size: clamp(.9rem, 1.5vw, 1.05rem);
+    line-height: 1.7; max-width: 540px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 100px 5vw 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-glow-1 {
+    position: absolute; width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+    top: -200px; right: -200px; pointer-events: none;
+    animation: floatGlow 8s ease-in-out infinite alternate;
+  }
+  .hero-glow-2 {
+    position: absolute; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+    bottom: -100px; left: -100px; pointer-events: none;
+    animation: floatGlow 10s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes floatGlow { from { transform: translate(0,0); } to { transform: translate(30px, 30px); } }
+  .hero-content { max-width: 780px; position: relative; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 40px; padding: 6px 16px;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--blue-bright); font-weight: 600; margin-bottom: 2rem;
+    animation: fadeInDown .8s ease forwards;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-bright); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -.03em;
+    color: var(--white);
+    margin-bottom: 1.4rem;
+    animation: fadeInUp .9s ease .1s both;
+  }
+  .hero-h1 .glow-text {
+    background: linear-gradient(90deg, var(--blue-bright), var(--violet-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    color: var(--white-dim); font-size: clamp(.95rem, 1.6vw, 1.15rem);
+    line-height: 1.75; max-width: 560px;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp .9s ease .2s both;
+  }
+  .hero-btns {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    animation: fadeInUp .9s ease .3s both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue-glow), var(--violet));
+    color: #fff; border: none; cursor: pointer;
+    font-family: var(--font-display); font-size: .88rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 15px 32px; border-radius: 50px;
+    box-shadow: 0 0 30px rgba(59,130,246,0.45), 0 4px 20px rgba(0,0,0,0.4);
+    transition: box-shadow .25s, transform .25s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { box-shadow: 0 0 50px rgba(59,130,246,0.7), 0 8px 30px rgba(0,0,0,0.5); transform: translateY(-2px) scale(1.03); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white); border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: var(--font-display); font-size: .88rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 15px 32px; border-radius: 50px;
+    transition: border-color .25s, background .25s, transform .25s;
+    text-decoration: none; display: inline-block;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.04);
+  }
+  .btn-secondary:hover { border-color: var(--blue-bright); background: rgba(59,130,246,0.1); transform: translateY(-2px); }
+
+  /* ── STATS ── */
+  #stats { padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  }
+  .stat-card {
+    background: var(--card-bg); padding: 36px 28px;
+    backdrop-filter: blur(12px);
+    display: flex; flex-direction: column; gap: 8px;
+    transition: background .3s;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .stat-card:hover::before { opacity: 1; }
+  .stat-card:hover { background: rgba(12,18,40,0.85); }
+  .stat-icon { font-size: 1.4rem; margin-bottom: 4px; }
+  .stat-label { font-family: var(--font-display); font-size: .95rem; font-weight: 700; color: var(--white); }
+  .stat-desc { font-size: .78rem; color: var(--white-dim); letter-spacing: .04em; }
+  .stat-glow { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-bright); box-shadow: 0 0 8px var(--blue-bright); margin-top: 8px; animation: pulse 2s infinite; }
+
+  /* ── SERVICES ── */
+  #services { padding: 120px 0; }
+  .services-header { text-align: center; margin-bottom: 60px; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;
+  }
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px 28px;
+    backdrop-filter: blur(12px);
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+    cursor: default; position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; inset: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(124,58,237,0.2), transparent);
+    opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .service-card:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(59,130,246,0.1); }
+  .service-card:hover::after { opacity: 1; }
+  .service-card > * { position: relative; z-index: 1; }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .service-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .service-desc { font-size: .85rem; color: var(--white-dim); line-height: 1.65; }
+  .service-arrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 1.2rem; font-size: .78rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--blue-bright); font-weight: 600;
+    opacity: 0; transform: translateX(-6px);
+    transition: opacity .3s, transform .3s;
+  }
+  .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ── PORTFOLIO ── */
+  #work { padding: 120px 0; }
+  .portfolio-header { margin-bottom: 50px; }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .portfolio-card {
+    border-radius: 20px; overflow: hidden;
+    background: var(--card-bg); border: 1px solid var(--border);
+    transition: transform .3s, box-shadow .3s;
+    cursor: pointer;
+  }
+  .portfolio-card:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(59,130,246,0.12); }
+  .portfolio-thumb {
+    height: 220px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .portfolio-thumb .overlay {
+    position: absolute; inset: 0;
+    background: rgba(4,4,10,0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s;
+    backdrop-filter: blur(4px);
+  }
+  .portfolio-card:hover .overlay { opacity: 1; }
+  .overlay-text { font-family: var(--font-display); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 8px 20px; border-radius: 40px; }
+  .portfolio-bg-1 { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+  .portfolio-bg-2 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+  .portfolio-bg-3 { background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #2d2d2d); }
+  .portfolio-bg-4 { background: linear-gradient(135deg, #0a0a1a, #14143a, #1e1e5a); }
+  .portfolio-bg-5 { background: linear-gradient(135deg, #0f1923, #1c2333, #252e40); }
+  .portfolio-bg-6 { background: linear-gradient(135deg, #12001f, #1e0035, #2d0050); }
+  .portfolio-mock {
+    width: 80%; max-width: 240px; padding: 20px;
+    background: rgba(255,255,255,0.05); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+  }
+  .mock-bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--blue-glow), var(--violet)); margin-bottom: 10px; }
+  .mock-lines { display: flex; flex-direction: column; gap: 5px; }
+  .mock-line { height: 5px; border-radius: 3px; background: rgba(255,255,255,0.15); }
+  .mock-line.short { width: 55%; }
+  .mock-line.shorter { width: 35%; }
+  .portfolio-info { padding: 20px 22px 24px; }
+  .portfolio-tag {
+    display: inline-block; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--blue-bright); border: 1px solid rgba(59,130,246,0.3);
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 600;
+  }
+  .portfolio-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .portfolio-sub { font-size: .82rem; color: var(--white-dim); }
+
+  /* ── PROCESS ── */
+  #process { padding: 120px 0; }
+  .process-header { text-align: center; margin-bottom: 70px; }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; position: relative; }
+  .process-steps::before {
+    content: ''; position: absolute; top: 36px; left: 12%; right: 12%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue-glow), var(--violet), transparent);
+    z-index: 0;
+  }
+  .process-step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+  .step-num {
+    width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 1.5rem;
+    background: var(--card-bg); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 800;
+    color: var(--blue-bright);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(59,130,246,0.2);
+    transition: box-shadow .3s, border-color .3s;
+  }
+  .process-step:hover .step-num { box-shadow: 0 0 50px rgba(59,130,246,0.5); border-color: rgba(59,130,246,0.5); }
+  .step-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+  .step-desc { font-size: .83rem; color: var(--white-dim); line-height: 1.6; }
+
+  /* ── WHY ── */
+  #about { padding: 120px 0; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .why-feat {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px 20px;
+    backdrop-filter: blur(12px);
+    transition: border-color .3s, transform .3s;
+  }
+  .why-feat:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-2px); }
+  .why-feat-icon { font-size: 1.3rem; margin-bottom: 10px; }
+  .why-feat-title { font-family: var(--font-display); font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+  .why-feat-desc { font-size: .78rem; color: var(--white-dim); line-height: 1.55; }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { padding: 120px 0; }
+  .testimonials-header { text-align: center; margin-bottom: 60px; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  .testimonial-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 28px;
+    backdrop-filter: blur(12px);
+    transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"'; position: absolute; top: 16px; right: 24px;
+    font-size: 5rem; line-height: 1; font-family: serif;
+    color: rgba(59,130,246,0.12); pointer-events: none;
+  }
+  .testimonial-card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-4px); }
+  .stars { color: #f59e0b; font-size: .9rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .testimonial-text { font-size: .9rem; line-height: 1.7; color: var(--chrome); margin-bottom: 1.5rem; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 800; font-size: .9rem;
+    color: #fff; flex-shrink: 0;
+  }
+  .av1 { background: linear-gradient(135deg, var(--blue-glow), var(--violet)); }
+  .av2 { background: linear-gradient(135deg, #7c3aed, #db2777); }
+  .av3 { background: linear-gradient(135deg, #0891b2, #2563eb); }
+  .author-name { font-family: var(--font-display); font-size: .88rem; font-weight: 700; }
+  .author-role { font-size: .75rem; color: var(--white-dim); }
+
+  /* ── INSTAGRAM EMBED ── */
+  #instagram { padding: 80px 0; }
+  .instagram-header { text-align: center; margin-bottom: 40px; }
+  .instagram-embed-wrap {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 300px;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 40px;
+    backdrop-filter: blur(12px);
+  }
+  .instagram-cta-box { text-align: center; }
+  .ig-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .ig-handle { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--white); margin-bottom: .5rem; }
+  .ig-sub { color: var(--white-dim); margin-bottom: 1.5rem; font-size: .9rem; }
+  .ig-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: #fff; text-decoration: none; font-family: var(--font-display);
+    font-weight: 700; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase;
+    padding: 13px 28px; border-radius: 50px;
+    transition: transform .25s, box-shadow .25s;
+    box-shadow: 0 0 30px rgba(253,29,29,0.3);
+  }
+  .ig-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 0 50px rgba(253,29,29,0.5); }
+
+  /* ── CTA ── */
+  #contact {
+    padding: 140px 0; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute; width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-glow2 {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 65%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--blue-bright); font-weight: 600; margin-bottom: 1.5rem;
+  }
+  .cta-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800; letter-spacing: -.03em; line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+  .cta-h2 .glow-text {
+    background: linear-gradient(90deg, var(--blue-bright), var(--violet-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .cta-sub { color: var(--white-dim); font-size: 1.05rem; max-width: 440px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 60px 5vw 36px;
+    position: relative; z-index: 1;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+  .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; text-decoration: none; }
+  .footer-brand-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(99,130,246,0.3); }
+  .footer-brand-name { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--white); }
+  .footer-brand-name span { color: var(--blue-bright); }
+  .footer-brand-desc { font-size: .83rem; color: var(--white-dim); line-height: 1.6; max-width: 220px; margin-bottom: 1.5rem; }
+  .footer-social { display: flex; gap: 12px; }
+  .social-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--chrome-dim); font-size: .85rem; text-decoration: none;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .social-icon:hover { border-color: rgba(59,130,246,0.4); color: var(--white); background: rgba(59,130,246,0.1); }
+  .footer-col-title { font-family: var(--font-display); font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--white); margin-bottom: 1rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a { font-size: .83rem; color: var(--white-dim); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom-text { font-size: .78rem; color: var(--white-dim); }
+  .footer-bottom-links { display: flex; gap: 1.5rem; }
+  .footer-bottom-links a { font-size: .78rem; color: var(--white-dim); text-decoration: none; transition: color .2s; }
+  .footer-bottom-links a:hover { color: var(--blue-bright); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(4,4,10,0.85); backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: linear-gradient(145deg, #07091a, #0c102a);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 24px; padding: 44px 40px;
+    max-width: 520px; width: 100%;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 60px rgba(59,130,246,0.15);
+    transform: translateY(20px) scale(.97);
+    transition: transform .3s;
+    position: relative; max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    color: var(--white-dim); font-size: 1.1rem; width: 32px; height: 32px;
+    border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.1); }
+  .modal-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: .4rem; }
+  .modal-sub { font-size: .87rem; color: var(--white-dim); margin-bottom: 2rem; line-height: 1.55; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-label { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--blue-bright); font-weight: 600; margin-bottom: 6px; }
+  .form-input, .form-select {
+    width: 100%; padding: 13px 16px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--white); font-family: var(--font-body);
+    font-size: .9rem; outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.2); }
+  .form-input:focus, .form-select:focus { border-color: rgba(59,130,246,0.5); box-shadow: 0 0 20px rgba(59,130,246,0.15); }
+  .form-input.error, .form-select.error { border-color: rgba(239,68,68,0.6); }
+  .form-error { font-size: .75rem; color: #f87171; margin-top: 5px; display: none; }
+  .form-error.show { display: block; }
+  .form-select option { background: #0c102a; color: var(--white); }
+  .radio-group { display: flex; gap: 12px; }
+  .radio-opt {
+    flex: 1; padding: 12px; border-radius: 12px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    cursor: pointer; text-align: center; transition: all .2s;
+  }
+  .radio-opt:hover { border-color: rgba(59,130,246,0.4); }
+  .radio-opt input { display: none; }
+  .radio-opt.selected { border-color: var(--blue-bright); background: rgba(59,130,246,0.1); }
+  .radio-opt-label { font-size: .82rem; font-weight: 600; color: var(--white-dim); display: block; transition: color .2s; }
+  .radio-opt.selected .radio-opt-label { color: var(--white); }
+  .radio-opt-icon { font-size: 1.3rem; margin-bottom: 4px; display: block; }
+  .form-submit {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--blue-glow), var(--violet));
+    border: none; border-radius: 50px; cursor: pointer;
+    font-family: var(--font-display); font-size: .9rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; color: #fff;
+    box-shadow: 0 0 30px rgba(59,130,246,0.4);
+    transition: box-shadow .25s, transform .25s;
+    margin-top: 1rem;
+  }
+  .form-submit:hover { box-shadow: 0 0 50px rgba(59,130,246,0.65); transform: translateY(-2px); }
+  .form-success {
+    text-align: center; padding: 20px;
+    display: none;
+  }
+  .form-success.show { display: block; }
+  .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; margin-bottom: .5rem; }
+  .success-sub { color: var(--white-dim); font-size: .88rem; line-height: 1.6; }
+
+  /* ── PRIVACY / ABOUT PAGES (hidden by default) ── */
+  .page-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--bg); overflow-y: auto;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+    padding: 100px 5vw 60px;
+  }
+  .page-overlay.active { opacity: 1; pointer-events: all; }
+  .page-content { max-width: 800px; margin: 0 auto; }
+  .page-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--blue-bright); font-weight: 600; cursor: pointer;
+    background: none; border: none; margin-bottom: 2rem;
+    transition: opacity .2s;
+  }
+  .page-back:hover { opacity: .7; }
+  .page-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
+  .page-body { font-size: .92rem; color: var(--white-dim); line-height: 1.8; }
+  .page-body h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--white); margin: 2rem 0 .7rem; }
+  .page-body p { margin-bottom: 1rem; }
+  .page-body ul { padding-left: 1.3rem; margin-bottom: 1rem; }
+  .page-body li { margin-bottom: .4rem; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .why-grid { grid-template-columns: 1fr; gap: 50px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .process-steps { gap: 30px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 4vw; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero-h1 { font-size: clamp(2rem, 8vw, 3rem); }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .why-features { grid-template-columns: 1fr; }
+    .modal-box { padding: 32px 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .radio-group { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img class="nav-logo-img" src="prime8agency-logo.png" alt="Prime8Agency Logo" id="nav-logo-img" />
+    <span class="nav-logo-text">PRIME<span>8</span>AGENCY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" onclick="openPage('privacy');return false;">Privacy</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal()">Book a Call</button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#work" onclick="closeMenu()">Work</a>
+  <a href="#process" onclick="closeMenu()">Process</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#" onclick="openPage('privacy');closeMenu();return false;">Privacy</a>
+  <button class="nav-cta" onclick="openModal();closeMenu()">Book a Call</button>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      AI-Powered Creative Growth Agency
+    </div>
+    <h1 class="hero-h1">
+      Scaling Modern Brands Through<br>
+      <span class="glow-text">Creative Performance.</span>
+    </h1>
+    <p class="hero-sub">
+      We help eCommerce brands grow through ad creatives, creator collaborations, performance marketing, and AI-powered digital experiences.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal()">Book a Call</button>
+      <a class="btn-secondary" href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener">View Work ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-label">24/7 Support</div>
+        <div class="stat-desc">Always available, always on</div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-label">Performance Focused</div>
+        <div class="stat-desc">Results-driven execution</div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🤖</div>
+        <div class="stat-label">AI-Powered Systems</div>
+        <div class="stat-desc">Intelligent creative automation</div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🌐</div>
+        <div class="stat-label">Creator Network</div>
+        <div class="stat-desc">Global creator partnerships</div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💡</div>
+        <div class="stat-label">Creative Strategy</div>
+        <div class="stat-desc">Brand-defining ideation</div>
+        <div class="stat-glow"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-label">Growth Optimization</div>
+        <div class="stat-desc">Compounding scale systems</div>
+        <div class="stat-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Full-Stack <span class="accent">Creative Growth</span></h2>
+      <p class="section-sub" style="margin: 1rem auto 0;">Every service engineered for performance, designed for premium brands.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-icon">🎬</div>
+        <div class="service-name">Ad Creative Production</div>
+        <div class="service-desc">High-converting static and video ad creatives built for Meta, Instagram, and beyond. Every creative is engineered to stop the scroll.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <div class="service-name">Short Form Video Ads</div>
+        <div class="service-desc">Cinematic short-form content optimized for Reels, TikTok-style ads, and vertical video — designed to convert at scale.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <div class="service-name">Creator Collaborations</div>
+        <div class="service-desc">We connect your brand with verified creators in our network. Authentic, performance-aligned partnerships at speed.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <div class="service-name">Meta Ads Management</div>
+        <div class="service-desc">Full-funnel Meta/Facebook/Instagram advertising managed by performance experts. ROAS-focused, data-obsessed.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <div class="service-name">Landing Page Design</div>
+        <div class="service-desc">Conversion-optimized landing pages that turn traffic into revenue. Futuristic design meets performance psychology.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🌐</div>
+        <div class="service-name">Website Development</div>
+        <div class="service-desc">Shopify, WooCommerce, and custom sites built with premium UX, fast load times, and brand-defining aesthetics.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✦</div>
+        <div class="service-name">Branding &amp; Strategy</div>
+        <div class="service-desc">Identity systems, visual direction, and brand strategy for eCommerce brands that want to stand apart.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🚀</div>
+        <div class="service-name">eCommerce Growth Systems</div>
+        <div class="service-desc">AI-powered growth stacks combining creative, paid media, and conversion optimization into one compounding system.</div>
+        <div class="service-arrow">Explore →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section id="work">
+  <div class="container">
+    <div class="portfolio-header reveal">
+      <div class="section-label">Our Work</div>
+      <h2 class="section-title">Built for <span class="accent">Premium Brands</span></h2>
+      <p class="section-sub" style="margin-top: .8rem;">A glimpse into the creative systems and campaigns we've engineered.</p>
+    </div>
+    <div class="portfolio-grid reveal">
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-1">
+          <div class="portfolio-mock"><div class="mock-bar"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">Fashion</span>
+          <div class="portfolio-title">Luxury Fashion Ad Creative</div>
+          <div class="portfolio-sub">Meta campaign — 4.2x ROAS in 30 days</div>
+        </div>
+      </div>
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-2">
+          <div class="portfolio-mock"><div class="mock-bar" style="background:linear-gradient(90deg,#7c3aed,#db2777)"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">Skincare</span>
+          <div class="portfolio-title">Skincare Campaign</div>
+          <div class="portfolio-sub">Creator collab — 220% reach growth</div>
+        </div>
+      </div>
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-3">
+          <div class="portfolio-mock"><div class="mock-bar" style="background:linear-gradient(90deg,#0891b2,#2563eb)"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">Landing Page</span>
+          <div class="portfolio-title">Luxury Brand Landing Page</div>
+          <div class="portfolio-sub">Shopify — 38% conversion rate lift</div>
+        </div>
+      </div>
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-4">
+          <div class="portfolio-mock"><div class="mock-bar" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">Short Form</span>
+          <div class="portfolio-title">Short Form Video Ads</div>
+          <div class="portfolio-sub">Reels campaign — 2M+ organic reach</div>
+        </div>
+      </div>
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-5">
+          <div class="portfolio-mock"><div class="mock-bar" style="background:linear-gradient(90deg,#10b981,#3b82f6)"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">eCommerce</span>
+          <div class="portfolio-title">Shopify Growth System</div>
+          <div class="portfolio-sub">Full-funnel build — 3x MoM revenue</div>
+        </div>
+      </div>
+      <div class="portfolio-card" onclick="window.open('https://www.instagram.com/prime8agency','_blank')">
+        <div class="portfolio-thumb portfolio-bg-6">
+          <div class="portfolio-mock"><div class="mock-bar" style="background:linear-gradient(90deg,#833ab4,#fcb045)"></div><div class="mock-lines"><div class="mock-line"></div><div class="mock-line short"></div><div class="mock-line shorter"></div></div></div>
+          <div class="overlay"><span class="overlay-text">View on Instagram</span></div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-tag">Branding</span>
+          <div class="portfolio-title">Premium Brand Identity</div>
+          <div class="portfolio-sub">Full rebrand — luxury positioning</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+  <div class="container">
+    <div class="process-header reveal">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Our <span class="accent">Growth Framework</span></h2>
+      <p class="section-sub" style="margin: 1rem auto 0;">A proven 4-step system to take your brand from obscure to iconic.</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Research &amp; Strategy</div>
+        <div class="step-desc">Deep-dive into your brand, audience, and competitive landscape to engineer a data-driven growth blueprint.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Creative Production</div>
+        <div class="step-desc">Cinematic ad creatives, short-form videos, and campaign assets built to perform across every platform.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Performance Optimization</div>
+        <div class="step-desc">Continuous testing, iteration, and AI-powered analysis to maximize ROAS and minimize cost per acquisition.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Scaling &amp; Growth</div>
+        <div class="step-desc">Once winners are identified, we build compounding systems that scale revenue month over month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY / ABOUT ── -->
+<section id="about">
+  <div class="container">
+    <div class="why-grid">
+      <div class="reveal">
+        <div class="section-label">Why Prime8Agency</div>
+        <h2 class="section-title">Beyond Creativity.<br><span class="accent">Beyond Limits.</span></h2>
+        <p class="section-sub" style="margin-top: 1.2rem;">
+          We're not a traditional agency. We're an AI-native creative growth system built for eCommerce brands that want to dominate. Every deliverable is engineered for performance, every creative built to convert, every strategy designed to scale.
+        </p>
+        <p class="section-sub" style="margin-top: 1rem;">
+          From Day 1, our focus is one thing: measurable growth. We combine premium creative direction with performance marketing intelligence to give your brand an unfair competitive advantage.
+        </p>
+        <div style="margin-top: 2rem; display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-primary" onclick="openModal()">Start Scaling</button>
+        </div>
+      </div>
+      <div class="why-features reveal">
+        <div class="why-feat">
+          <div class="why-feat-icon">🤖</div>
+          <div class="why-feat-title">AI-Powered Workflows</div>
+          <div class="why-feat-desc">We use AI at every stage — from creative ideation to performance analysis — to move faster and smarter than anyone.</div>
+        </div>
+        <div class="why-feat">
+          <div class="why-feat-icon">🎯</div>
+          <div class="why-feat-title">Performance-First</div>
+          <div class="why-feat-desc">Every creative and campaign decision is made through the lens of ROI. We obsess over your numbers.</div>
+        </div>
+        <div class="why-feat">
+          <div class="why-feat-icon">⚡</div>
+          <div class="why-feat-title">Reliable Support</div>
+          <div class="why-feat-desc">24/7 communication and rapid turnarounds. We move at the speed your brand demands.</div>
+        </div>
+        <div class="why-feat">
+          <div class="why-feat-icon">✦</div>
+          <div class="why-feat-title">Premium Creative Direction</div>
+          <div class="why-feat-desc">Luxury-level design and storytelling that positions your brand at the top of your market.</div>
+        </div>
+        <div class="why-feat">
+          <div class="why-feat-icon">🌐</div>
+          <div class="why-feat-title">Creator Network</div>
+          <div class="why-feat-desc">Access to a vetted network of creators who align with your brand's values and audience.</div>
+        </div>
+        <div class="why-feat">
+          <div class="why-feat-icon">📈</div>
+          <div class="why-feat-title">Scalable Systems</div>
+          <div class="why-feat-desc">We don't just run campaigns — we build compounding growth systems that work harder over time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <div class="section-label">Client Voices</div>
+      <h2 class="section-title">Brands That <span class="accent">Trust Us</span></h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"Prime8Agency completely transformed how we approach paid media. The creative quality is on another level — our ROAS went from 1.8x to 4.6x in 6 weeks. Absolutely elite team."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar av1">AL</div>
+          <div>
+            <div class="author-name">Alex Lawson</div>
+            <div class="author-role">Founder, LuxeFit Apparel</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"The landing page they built us converted at nearly 40%. We've worked with multiple agencies before — nobody comes close to the quality and speed of Prime8Agency. Game changers."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar av2">SK</div>
+          <div>
+            <div class="author-name">Sophia Kim</div>
+            <div class="author-role">CEO, GLOW Skincare</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">"From branding to ad creatives to Meta management — Prime8Agency does it all with a level of polish I didn't think was possible at this scale. Our brand finally looks as good as our product."</div>
+        <div class="testimonial-author">
+          <div class="author-avatar av3">MR</div>
+          <div>
+            <div class="author-name">Marcus Reid</div>
+            <div class="author-role">Co-Founder, Apex Essentials</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSTAGRAM ── -->
+<section id="instagram">
+  <div class="container">
+    <div class="instagram-header reveal">
+      <div class="section-label">Follow Our Work</div>
+      <h2 class="section-title">See It on <span class="accent">Instagram</span></h2>
+    </div>
+    <div class="instagram-embed-wrap reveal">
+      <div class="instagram-cta-box">
+        <div class="ig-icon">📸</div>
+        <div class="ig-handle">@prime8agency</div>
+        <div class="ig-sub">See our latest campaigns, creative work, and brand collaborations on Instagram.</div>
+        <a class="ig-btn" href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Follow on Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-glow2"></div>
+  <div class="cta-content container">
+    <div class="cta-label">
+      <span style="display:block;width:20px;height:1px;background:var(--blue-bright)"></span>
+      Ready to Scale?
+    </div>
+    <h2 class="cta-h2">Build A Brand<br><span class="glow-text">People Remember.</span></h2>
+    <p class="cta-sub">Book a free strategy call. We'll map out exactly how to grow your brand with AI-powered creative performance.</p>
+    <button class="btn-primary" style="font-size:1rem;padding:18px 44px;" onclick="openModal()">Start Scaling →</button>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <img class="footer-brand-img" src="prime8agency-logo.png" alt="Logo" />
+        <span class="footer-brand-name">PRIME<span>8</span>AGENCY</span>
+      </a>
+      <p class="footer-brand-desc">AI-Powered Creative Growth Agency. We build intelligent growth empires for eCommerce brands worldwide.</p>
+      <div class="footer-social">
+        <a class="social-icon" href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Ad Creative Production</a></li>
+        <li><a href="#services">Short Form Video Ads</a></li>
+        <li><a href="#services">Meta Ads Management</a></li>
+        <li><a href="#services">Creator Collaborations</a></li>
+        <li><a href="#services">Landing Page Design</a></li>
+        <li><a href="#services">Website Development</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#" onclick="openPage('privacy');return false;">Privacy Policy</a></li>
+        <li><a href="#" onclick="openPage('terms');return false;">Terms &amp; Conditions</a></li>
+      </ul>
+      <div style="margin-top: 1.5rem;">
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:prime8agency.in@gmail.com">prime8agency.in@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener">@prime8agency</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-text">© 2025 Prime8Agency. All rights reserved. Infinite Growth. Intelligently Engineered.</div>
+    <div class="footer-bottom-links">
+      <a href="#" onclick="openPage('privacy');return false;">Privacy</a>
+      <a href="#" onclick="openPage('terms');return false;">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── BOOK A CALL MODAL ── -->
+<div class="modal-overlay" id="bookModal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <div id="formContainer">
+      <h2 class="modal-title">Book a <span style="color:var(--blue-bright)">Free Call</span></h2>
+      <p class="modal-sub">Tell us about your brand and we'll reach out within 24 hours to schedule your strategy session.</p>
+
+      <div class="form-group">
+        <label class="form-label">I am a *</label>
+        <div class="radio-group">
+          <label class="radio-opt" id="opt-creator" onclick="selectType('creator')">
+            <input type="radio" name="type" value="creator" />
+            <span class="radio-opt-icon">🎨</span>
+            <span class="radio-opt-label">Creator</span>
+          </label>
+          <label class="radio-opt" id="opt-business" onclick="selectType('business')">
+            <input type="radio" name="type" value="business" />
+            <span class="radio-opt-icon">🏢</span>
+            <span class="radio-opt-label">Business</span>
+          </label>
+        </div>
+        <div class="form-error" id="err-type">Please select whether you're a creator or business.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-name">Full Name *</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Your full name" oninput="clearError('name')" />
+        <div class="form-error" id="err-name">Please enter your name.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-email">Email Address *</label>
+        <input class="form-input" type="email" id="f-email" placeholder="your@email.com" oninput="clearError('email')" />
+        <div class="form-error" id="err-email">Please enter a valid email address.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-phone">Phone Number * (10 digits)</label>
+        <input class="form-input" type="tel" id="f-phone" placeholder="10-digit phone number" maxlength="10" oninput="clearError('phone');this.value=this.value.replace(/\D/g,'')" />
+        <div class="form-error" id="err-phone">Phone number must be exactly 10 digits.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-service">Service Interested In *</label>
+        <select class="form-select" id="f-service" onchange="clearError('service')">
+          <option value="">Select a service…</option>
+          <option>Ad Creative Production</option>
+          <option>Short Form Video Ads</option>
+          <option>Creator Collaborations</option>
+          <option>Meta Ads Management</option>
+          <option>Landing Page Design</option>
+          <option>Website Development</option>
+          <option>Branding &amp; Strategy</option>
+          <option>eCommerce Growth Systems</option>
+          <option>Full Package</option>
+        </select>
+        <div class="form-error" id="err-service">Please select a service.</div>
+      </div>
+
+      <button class="form-submit" onclick="submitForm()">Book My Free Call →</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">✅</div>
+      <div class="success-title">You're Booked!</div>
+      <div class="success-sub">We've received your details and will reach out to <strong id="success-email"></strong> within 24 hours to confirm your strategy call.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIVACY PAGE ── -->
+<div class="page-overlay" id="privacyPage">
+  <div class="page-content">
+    <button class="page-back" onclick="closePage('privacy')">← Back</button>
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="section-label" style="margin-bottom:1.5rem;">Last updated: May 2025</div>
+    <div class="page-body">
+      <p>Prime8Agency ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or engage with our services.</p>
+      <h3>1. Information We Collect</h3>
+      <p>We may collect personal information that you voluntarily provide when booking a call, contacting us, or engaging our services, including:</p>
+      <ul>
+        <li>Full name and contact details (email address, phone number)</li>
+        <li>Business name and information</li>
+        <li>Service inquiries and communication history</li>
+        <li>Payment information (processed securely via third-party providers)</li>
+        <li>Technical data such as IP address, browser type, and pages visited</li>
+      </ul>
+      <h3>2. How We Use Your Information</h3>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Respond to your inquiries and schedule strategy calls</li>
+        <li>Deliver and manage our services</li>
+        <li>Process payments and invoices</li>
+        <li>Send project updates and relevant communications</li>
+        <li>Improve our website and service offerings</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      <h3>3. How We Share Your Information</h3>
+      <p>We do not sell, trade, or rent your personal information to third parties. We may share information with trusted service providers who assist us in operating our website and delivering services (such as email platforms, payment processors, and project management tools), under strict confidentiality agreements.</p>
+      <p>We may disclose information where required by law or to protect our legal rights.</p>
+      <h3>4. Data Security</h3>
+      <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of internet transmission is 100% secure.</p>
+      <h3>5. Third-Party Platforms</h3>
+      <p>Our services may involve third-party platforms including Meta, Instagram, Shopify, WordPress, and others. Your use of these platforms is governed by their respective privacy policies. We are not responsible for the privacy practices of these third parties.</p>
+      <h3>6. Cookies and Tracking</h3>
+      <p>Our website may use cookies and similar tracking technologies to enhance your experience. You can control cookie settings through your browser preferences.</p>
+      <h3>7. Data Retention</h3>
+      <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy, unless a longer retention period is required by law.</p>
+      <h3>8. Your Rights</h3>
+      <p>Depending on your location, you may have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at <a href="mailto:prime8agency.in@gmail.com" style="color:var(--blue-bright)">prime8agency.in@gmail.com</a>.</p>
+      <h3>9. Children's Privacy</h3>
+      <p>Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from minors.</p>
+      <h3>10. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the updated policy on our website with a revised date.</p>
+      <h3>11. Contact Us</h3>
+      <p>For any questions about this Privacy Policy, please contact us at <a href="mailto:prime8agency.in@gmail.com" style="color:var(--blue-bright)">prime8agency.in@gmail.com</a> or via Instagram at <a href="https://instagram.com/prime8agency" target="_blank" style="color:var(--blue-bright)">@prime8agency</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── TERMS PAGE ── -->
+<div class="page-overlay" id="termsPage">
+  <div class="page-content">
+    <button class="page-back" onclick="closePage('terms')">← Back</button>
+    <h1 class="page-title">Terms &amp; Conditions</h1>
+    <div class="section-label" style="margin-bottom:1.5rem;">Commission, Marketing &amp; Website Service Agreement</div>
+    <div class="page-body">
+      <p>By working with Prime8Agency, the client agrees to the following Terms &amp; Conditions.</p>
+      <h3>1. Services Provided</h3>
+      <p>Prime8Agency provides services including but not limited to: creator collaborations, brand partnerships, lead generation, performance marketing, social media growth, ad creative production, video editing, Meta/Instagram advertising, website design &amp; development, landing page creation, e-commerce store setup, and branding &amp; digital strategy.</p>
+      <h3>2. Commission Structure</h3>
+      <p>Prime8Agency charges a 10% commission fee on every successful deal, collaboration, sale, partnership, or client acquisition generated through our creator network, outreach, advertising, marketing systems, or promotional campaigns. This applies to creator-brand collaborations, influencer campaigns, sales generated through our marketing efforts, and business opportunities sourced by Prime8Agency.</p>
+      <h3>3. Website &amp; Development Payments</h3>
+      <p>Clients agree to pay the agreed project amount before final delivery, provide all required content and media on time, and review/approve website drafts within a reasonable timeframe.</p>
+      <h3>4. Ownership &amp; Delivery</h3>
+      <p>Final website files, assets, and access credentials will only be transferred after full payment and clearing of all pending invoices. Prime8Agency reserves the right to temporarily suspend unfinished projects in case of non-payment.</p>
+      <h3>5. Payment Terms</h3>
+      <p>Payments must be completed according to the agreed invoice timeline. Late payments may result in delayed delivery, paused services, or cancellation of ongoing work.</p>
+      <h3>6. Revisions Policy</h3>
+      <p>Clients are entitled to reasonable revisions based on the selected service package. Major structural changes or requests outside the original scope may involve additional charges.</p>
+      <h3>7. No Guarantee Clause</h3>
+      <p>While Prime8Agency focuses on high-quality execution, we do not guarantee fixed revenue, guaranteed sales, guaranteed ad performance, guaranteed viral growth, or guaranteed conversion rates. Results depend on market conditions, product quality, audience behavior, competition, advertising budget, and client cooperation.</p>
+      <h3>8. Confidentiality</h3>
+      <p>Both parties agree to maintain confidentiality regarding pricing details, campaign strategies, creator information, private discussions, business data, and marketing systems.</p>
+      <h3>9. Portfolio Rights</h3>
+      <p>Prime8Agency reserves the right to showcase completed work in its portfolio, website, and social media for promotional purposes unless otherwise agreed upon in writing.</p>
+      <h3>10. Client Responsibilities</h3>
+      <p>The client agrees to provide accurate business information and assets on time, maintain professional communication, and ensure they possess legal rights to all provided content. Prime8Agency is not responsible for delays caused by lack of communication, missing assets, or incomplete information.</p>
+      <h3>11. Third-Party Services</h3>
+      <p>Prime8Agency may utilize third-party platforms (Meta Ads, Instagram, Shopify, WordPress, Canva, CapCut, hosting providers, etc.). Prime8Agency is not liable for platform outages, restrictions, account bans, policy changes, or technical failures. Third-party subscription costs are the client's responsibility unless otherwise agreed.</p>
+      <h3>12. Termination &amp; Cancellation</h3>
+      <p>Either party may terminate the working relationship with written notice. Payments for completed work remain non-refundable. Active retainers must be canceled before the next billing cycle.</p>
+      <h3>13. Limitation of Liability</h3>
+      <p>Prime8Agency shall not be held liable for indirect losses, business interruptions, loss of profits, advertising performance fluctuations, or third-party service failures. All marketing efforts involve varying levels of risk.</p>
+      <h3>14. Acceptance of Terms</h3>
+      <p>By proceeding with Prime8Agency's services, the client confirms they have read, understood, and accepted all Terms &amp; Conditions stated above.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PARTICLES ──
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const COLORS = ['rgba(59,130,246,', 'rgba(124,58,237,', 'rgba(96,165,250,'];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function mkParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.3,
+      dx: (Math.random() - 0.5) * 0.35,
+      dy: (Math.random() - 0.5) * 0.35,
+      a: Math.random(),
+      c: COLORS[Math.floor(Math.random() * COLORS.length)]
+    };
+  }
+
+  for (let i = 0; i < 90; i++) particles.push(mkParticle());
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > W) p.dx *= -1;
+      if (p.y < 0 || p.y > H) p.dy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.c + p.a + ')';
+      ctx.fill();
+    });
+
+    // draw faint connection lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(59,130,246,${0.08 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => obs.observe(el));
+
+// ── MOBILE MENU ──
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('bookModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('bookModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('bookModal')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── RADIO TYPE SELECT ──
+let selectedType = '';
+function selectType(type) {
+  selectedType = type;
+  document.getElementById('opt-creator').classList.remove('selected');
+  document.getElementById('opt-business').classList.remove('selected');
+  document.getElementById('opt-' + type).classList.add('selected');
+  document.getElementById('err-type').classList.remove('show');
+}
+
+// ── FORM VALIDATION ──
+function clearError(field) {
+  document.getElementById('err-' + field).classList.remove('show');
+  const input = document.getElementById('f-' + field);
+  if (input) input.classList.remove('error');
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function submitForm() {
+  let valid = true;
+
+  // Type
+  if (!selectedType) {
+    document.getElementById('err-type').classList.add('show');
+    valid = false;
+  }
+
+  // Name
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) {
+    document.getElementById('err-name').classList.add('show');
+    document.getElementById('f-name').classList.add('error');
+    valid = false;
+  }
+
+  // Email
+  const email = document.getElementById('f-email').value.trim();
+  if (!email || !validateEmail(email)) {
+    document.getElementById('err-email').classList.add('show');
+    document.getElementById('f-email').classList.add('error');
+    valid = false;
+  }
+
+  // Phone
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!phone || phone.length !== 10) {
+    document.getElementById('err-phone').classList.add('show');
+    document.getElementById('f-phone').classList.add('error');
+    valid = false;
+  }
+
+  // Service
+  const service = document.getElementById('f-service').value;
+  if (!service) {
+    document.getElementById('err-service').classList.add('show');
+    document.getElementById('f-service').classList.add('error');
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  // Build mailto
+const formData = {
+    access_key: "2d814309-304b-4665-ac34-b5e4a2f492ad",
+    subject: "New Call Booking — Prime8Agency",
+    from_name: name,
+    replyto: email,
+    Type: selectedType === 'creator' ? 'Creator' : 'Business',
+    Name: name,
+    Email: email,
+    Phone: phone,
+    Service: service
+  };
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('formContainer').style.display = 'none';
+      document.getElementById('success-email').textContent = email;
+      document.getElementById('formSuccess').classList.add('show');
+    } else {
+      alert('Something went wrong. Please email us at prime8.agency@gmail.com');
+    }
+  })
+  .catch(() => {
+    alert('Something went wrong. Please email us at prime8.agency@gmail.com');
+  });
+
+  // Show success
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('success-email').textContent = email;
+  document.getElementById('formSuccess').classList.add('show');
+}
+
+// ── PAGES (Privacy / Terms) ──
+function openPage(page) {
+  const id = page === 'privacy' ? 'privacyPage' : 'termsPage';
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closePage(page) {
+  const id = page === 'privacy' ? 'privacyPage' : 'termsPage';
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ── EMBED LOGO from uploaded image ──
+// Using the provided image as base64 placeholder; in production replace with actual image path
+(function() {
+  // We'll embed a high-quality SVG approximation of the logo for the nav circle
+  // since we can't embed the large PNG directly as base64 in a portable HTML file
+  // The user should replace the src with the actual logo file path when deploying
+})();
+</script>
+</body>
+</html>
