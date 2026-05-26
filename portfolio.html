@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — Prime8Agency</title>
+<meta name="description" content="Prime8Agency creative work — ad creatives, reel edits, landing pages, branding, UGC campaigns and more." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #111114;
+    --ink-soft: #3f4148;
+    --muted: #6f737d;
+    --line: rgba(17,17,20,.12);
+    --line-strong: rgba(17,17,20,.22);
+    --paper: #fbfaf7;
+    --paper-2: #f1eee8;
+    --white: #ffffff;
+    --shadow: 0 24px 80px rgba(17,17,20,.16);
+    --font: "Instrument Sans", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: radial-gradient(circle at 50% -10%, rgba(255,255,255,.95), transparent 32rem),
+      linear-gradient(135deg, #fbfaf7 0%, #ede8de 48%, #faf8f2 100%);
+    font-family: var(--font);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -3; pointer-events: none;
+    background-image: linear-gradient(rgba(17,17,20,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,20,.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.7) 46%, transparent 100%);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: .13;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  }
+  a { color: inherit; text-decoration: none; }
+  button, input, select { font: inherit; }
+  ::selection { background: #111114; color: #fff; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--paper-2); }
+  ::-webkit-scrollbar-thumb { background: var(--ink); border-radius: 99px; }
+  #particle-canvas { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; opacity: .32; mix-blend-mode: multiply; }
+  .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+  .section-pad { padding: 112px 0; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--ink); }
+  .section-title { margin: 0; max-width: 820px; font-size: clamp(38px,6vw,82px); line-height: .92; letter-spacing: 0; font-weight: 700; }
+  .section-copy { margin: 20px 0 0; max-width: 620px; color: var(--ink-soft); font-size: clamp(16px,1.6vw,20px); line-height: 1.55; }
+  .accent { font-style: italic; font-weight: 700; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 100;
+    width: min(1120px, calc(100% - 32px)); height: 64px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 8px 8px 8px 14px; border: 1px solid rgba(17,17,20,.11); border-radius: 999px;
+    background: rgba(251,250,247,.76); backdrop-filter: blur(22px); box-shadow: 0 18px 48px rgba(17,17,20,.1);
+  }
+  .nav-logo { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+  .nav-logo-img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+  .nav-logo-text { color: var(--ink); font-size: 14px; font-weight: 700; letter-spacing: .16em; white-space: nowrap; }
+  .nav-links { display: flex; align-items: center; gap: 6px; padding: 0; margin: 0; list-style: none; }
+  .nav-links a { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 999px; color: var(--ink-soft); font-size: 13px; font-weight: 600; transition: background .2s ease, color .2s ease; }
+  .nav-links a:hover, .nav-links a.active { background: rgba(17,17,20,.06); color: var(--ink); }
+  .nav-cta { height: 48px; padding: 0 22px; white-space: nowrap; border: 0; cursor: pointer; border-radius: 999px; color: #fff; background: linear-gradient(135deg, #0a0a0b, #30323a); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 34px rgba(17,17,20,.18); font-weight: 700; transition: transform .22s ease, box-shadow .22s ease; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 20px 46px rgba(17,17,20,.24); }
+  .hamburger { display: none; width: 44px; height: 44px; border: 0; border-radius: 999px; background: var(--ink); padding: 13px; cursor: pointer; }
+  .hamburger span { display: block; height: 2px; margin: 5px 0; border-radius: 2px; background: #fff; }
+  .mobile-menu {
+    position: fixed; inset: 92px 16px auto 16px; z-index: 99; display: none; flex-direction: column; gap: 8px; padding: 16px;
+    border: 1px solid var(--line); border-radius: 24px; background: rgba(251,250,247,.95); backdrop-filter: blur(20px); box-shadow: var(--shadow);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a, .mobile-menu button { width: 100%; justify-content: center; text-align: center; padding: 15px 18px; border-radius: 16px; font-weight: 700; }
+  .mobile-menu a { background: rgba(17,17,20,.055); display: block; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* TILT */
+  .tilt { transition: transform .25s ease; }
+
+  /* HERO */
+  #hero { min-height: 100vh; padding: 118px 0 38px; display: grid; align-items: center; }
+  .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .hero-copy { display: flex; flex-direction: column; gap: 24px; }
+  .hero-kicker { width: fit-content; display: inline-flex; gap: 10px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.55); color: var(--ink-soft); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 7px rgba(17,17,20,.08); animation: pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform: scale(.75); opacity: .55; } }
+  .hero-h1 { margin: 0; font-size: clamp(48px,7vw,96px); line-height: .88; font-weight: 700; }
+  .hero-h1 .italic { font-style: italic; }
+  .hero-sub { margin: 0; max-width: 540px; color: var(--ink-soft); font-size: clamp(16px,1.6vw,19px); line-height: 1.55; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 28px; border: 0; cursor: pointer; border-radius: 999px; color: #fff; background: linear-gradient(135deg,#0a0a0b,#30323a); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 14px 34px rgba(17,17,20,.18); font-weight: 700; font-size: 15px; transition: transform .22s ease, box-shadow .22s ease; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 20px 46px rgba(17,17,20,.24); }
+  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 28px; border: 1px solid var(--line-strong); background: rgba(255,255,255,.35); color: var(--ink); border-radius: 999px; font-weight: 700; font-size: 15px; transition: transform .22s ease, background .22s ease, box-shadow .22s ease; }
+  .btn-secondary:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 15px 32px rgba(17,17,20,.12); }
+
+  /* HERO VISUAL — metrics panel */
+  .hero-panel {
+    position: relative; min-height: 520px; border-radius: 32px; overflow: hidden; color: #fff;
+    background: linear-gradient(160deg,rgba(255,255,255,.18),transparent 28%), radial-gradient(circle at 30% 8%,rgba(255,255,255,.28),transparent 22rem), linear-gradient(145deg,#070708,#1f2026 62%,#050506);
+    box-shadow: var(--shadow); isolation: isolate;
+  }
+  .hero-panel::before { content: ""; position: absolute; inset: 18px; border-radius: 24px; border: 1px solid rgba(255,255,255,.12); pointer-events: none; }
+  .hero-panel::after {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image: linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size: 46px 46px; mask-image: radial-gradient(circle at 55% 42%,#000,transparent 68%);
+  }
+  .panel-content { position: absolute; inset: 36px; display: flex; flex-direction: column; justify-content: space-between; z-index: 2; }
+  .panel-label { color: rgba(255,255,255,.55); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .panel-title { font-size: clamp(22px,2.8vw,36px); font-weight: 700; line-height: 1.05; margin-top: 10px; }
+  .panel-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .panel-metric { padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; background: rgba(255,255,255,.07); backdrop-filter: blur(14px); }
+  .panel-metric strong { display: block; font-size: clamp(20px,2.2vw,28px); line-height: 1; }
+  .panel-metric span { display: block; margin-top: 8px; color: rgba(255,255,255,.6); font-size: 11px; font-weight: 600; line-height: 1.3; }
+  .panel-bar { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .pbar-row { display: flex; align-items: center; gap: 12px; }
+  .pbar-label { color: rgba(255,255,255,.55); font-size: 12px; font-weight: 600; width: 110px; flex-shrink: 0; }
+  .pbar-track { flex: 1; height: 5px; border-radius: 99px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .pbar-fill { height: 100%; border-radius: 99px; background: rgba(255,255,255,.7); }
+
+  /* FILTER BAR */
+  .filter-section { padding: 32px 0 0; }
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+  .filter-btn { height: 40px; padding: 0 18px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(255,255,255,.35); color: var(--ink-soft); font-size: 13px; font-weight: 600; cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+  .filter-btn:hover, .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* WORK GRID */
+  .work-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 36px; }
+  .work-card {
+    border: 1px solid var(--line); border-radius: 24px; background: rgba(255,255,255,.42); box-shadow: 0 18px 48px rgba(17,17,20,.08);
+    overflow: hidden; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .work-card:hover { transform: translateY(-7px); box-shadow: 0 26px 70px rgba(17,17,20,.16); }
+  .work-thumb { min-height: 240px; position: relative; display: grid; place-items: center; overflow: hidden; }
+  .work-thumb::before { content: ""; position: absolute; inset: 0; opacity: .7; background-image: linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size: 30px 30px; }
+  .wbg-1 { background: linear-gradient(145deg,#0a0a0b,#2a2b31); }
+  .wbg-2 { background: linear-gradient(145deg,#f6f4ef,#cfc7b8); }
+  .wbg-3 { background: linear-gradient(145deg,#1b1c20,#070708); }
+  .wbg-4 { background: linear-gradient(145deg,#f9f8f4,#e0d8ca); }
+  .wbg-5 { background: linear-gradient(145deg,#101115,#343640); }
+  .wbg-6 { background: linear-gradient(145deg,#e8e2d7,#ffffff); }
+
+  /* MOCK VISUALS */
+  .mock-wrap { position: relative; z-index: 1; width: 72%; padding: 16px; border-radius: 18px; transition: transform .25s ease; }
+  .work-card:hover .mock-wrap { transform: scale(1.04); }
+  .mock-dark { border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); backdrop-filter: blur(12px); }
+  .mock-light { border: 1px solid rgba(17,17,20,.1); background: rgba(255,255,255,.65); backdrop-filter: blur(12px); }
+  /* reel thumbnail mock */
+  .mock-reel { min-height: 140px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 14px; border-radius: 14px; background: linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85)); position: relative; overflow: hidden; }
+  .mock-reel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); opacity: .9; }
+  .mock-reel-hook { position: relative; z-index: 1; color: #fff; font-size: 13px; font-weight: 700; line-height: 1.2; }
+  .mock-reel-sub { position: relative; z-index: 1; color: rgba(255,255,255,.6); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .mock-reel-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-70%); z-index: 1; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3); display: grid; place-items: center; color: #fff; font-size: 12px; }
+  /* website mock */
+  .mock-site { display: flex; flex-direction: column; gap: 8px; }
+  .mock-nav-bar { height: 28px; border-radius: 8px; background: rgba(255,255,255,.9); display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+  .mock-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .mock-dot-r { background: #ff5f57; }
+  .mock-dot-y { background: #ffbd2e; }
+  .mock-dot-g { background: #28ca41; }
+  .mock-url { flex: 1; height: 14px; border-radius: 4px; background: rgba(17,17,20,.08); margin-left: 6px; }
+  .mock-hero-block { height: 60px; border-radius: 8px; background: linear-gradient(135deg,#111114,#2a2b31); display: flex; align-items: flex-end; padding: 8px 10px; }
+  .mock-hero-text { height: 8px; width: 60%; border-radius: 4px; background: rgba(255,255,255,.7); }
+  .mock-cards-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+  .mock-mini-card { height: 28px; border-radius: 6px; background: rgba(17,17,20,.08); }
+  /* branding mock */
+  .mock-brand { display: flex; flex-direction: column; gap: 10px; padding: 14px; }
+  .mock-brand-logo { height: 38px; border-radius: 10px; background: #111114; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+  .mock-brand-colors { display: flex; gap: 6px; }
+  .mock-swatch { height: 22px; flex: 1; border-radius: 6px; }
+  .mock-brand-lines { display: flex; flex-direction: column; gap: 6px; }
+  .mock-brand-line { height: 8px; border-radius: 4px; background: rgba(17,17,20,.12); }
+  .mock-brand-line.w80 { width: 80%; }
+  .mock-brand-line.w55 { width: 55%; }
+  /* edit mock */
+  .mock-edit { display: flex; flex-direction: column; gap: 6px; }
+  .mock-edit-screen { height: 70px; border-radius: 10px; background: #0a0a0b; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .mock-edit-screen::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,#ff0000 0%,transparent 40%,transparent 60%,#0066ff 100%); opacity: .15; }
+  .mock-edit-badge { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 6px; color: #fff; font-size: 9px; font-weight: 700; padding: 4px 8px; letter-spacing: .06em; }
+  .mock-timeline { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: rgba(0,0,0,.6); border-radius: 8px; }
+  .mock-tl-row { display: flex; gap: 4px; }
+  .mock-tl-clip { height: 10px; border-radius: 3px; }
+  .mock-tl-v { background: rgba(255,80,80,.7); width: 35%; }
+  .mock-tl-a { background: rgba(80,120,255,.7); width: 25%; }
+  .mock-tl-t { background: rgba(255,200,0,.7); width: 18%; }
+  /* ugc mock */
+  .mock-ugc { display: flex; flex-direction: column; gap: 8px; }
+  .mock-ugc-img { height: 80px; border-radius: 12px; background: linear-gradient(135deg,#fde8d8,#f5c6a0); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .mock-ugc-tag { background: rgba(255,255,255,.85); border-radius: 6px; padding: 3px 8px; font-size: 9px; font-weight: 700; color: #111; letter-spacing: .06em; }
+  .mock-ugc-row { display: flex; gap: 6px; }
+  .mock-ugc-pill { flex: 1; height: 22px; border-radius: 99px; background: rgba(17,17,20,.08); }
+  /* poster mock */
+  .mock-poster { min-height: 140px; border-radius: 14px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; background: linear-gradient(145deg,#111114,#2b2d35); position: relative; overflow: hidden; }
+  .mock-poster::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%,rgba(255,255,255,.06),transparent 60%); }
+  .mock-poster-eyebrow { color: rgba(255,255,255,.45); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .mock-poster-title { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.15; position: relative; z-index: 1; }
+  .mock-poster-line { height: 1px; background: rgba(255,255,255,.12); margin: 8px 0; }
+  .mock-poster-sub { color: rgba(255,255,255,.4); font-size: 9px; font-weight: 600; letter-spacing: .08em; }
+
+  /* overlay */
+  .work-overlay { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(8px); transition: opacity .25s ease; z-index: 3; }
+  .work-card:hover .work-overlay { opacity: 1; }
+  .overlay-pill { padding: 10px 16px; border: 1px solid rgba(255,255,255,.36); border-radius: 999px; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+  .work-info { padding: 22px; background: rgba(255,255,255,.55); }
+  .work-tag { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .work-title { margin-top: 10px; font-size: 20px; font-weight: 700; }
+  .work-sub { margin-top: 6px; color: var(--muted); font-size: 14px; }
+
+  /* METRICS STRIP */
+  .metrics-strip { background: linear-gradient(145deg,#070708,#1f2026); border-radius: 28px; padding: 44px; color: #fff; position: relative; overflow: hidden; }
+  .metrics-strip::before { content: ""; position: absolute; inset: 0; opacity: .35; background-image: linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size: 44px 44px; }
+  .metrics-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+  .metric-item { text-align: center; }
+  .metric-num { font-size: clamp(32px,4vw,52px); font-weight: 700; line-height: 1; }
+  .metric-label { margin-top: 10px; color: rgba(255,255,255,.6); font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .metric-divider { width: 1px; background: rgba(255,255,255,.1); }
+
+  /* BRAND CONNECTIONS */
+  .brands-section { background: rgba(255,255,255,.38); border: 1px solid var(--line); border-radius: 28px; padding: 44px; }
+  .brands-intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 36px; }
+  .brand-note { font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.5); white-space: nowrap; }
+  .brands-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  .brand-card { min-height: 120px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.5); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; transition: transform .25s ease, background .25s ease, box-shadow .25s ease; }
+  .brand-card:hover { transform: translateY(-5px); background: #fff; box-shadow: 0 20px 50px rgba(17,17,20,.1); }
+  .brand-logo-mock { width: 48px; height: 48px; border-radius: 12px; background: var(--ink); display: grid; place-items: center; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+  .brand-name { font-size: 15px; font-weight: 700; }
+  .brand-status { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+
+  /* CTA */
+  #cta { padding: 128px 0; }
+  .cta-content { min-height: 420px; display: grid; place-items: center; text-align: center; padding: 50px 24px; border-radius: 34px; color: #fff; background: linear-gradient(140deg,rgba(255,255,255,.18),transparent 28%), linear-gradient(145deg,#050506,#24262d); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .cta-content::before { content: ""; position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px); background-size: 54px 54px; }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-label { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,.7); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
+  .cta-label span { width: 24px; height: 1px; background: rgba(255,255,255,.72); }
+  .cta-h2 { margin: 0 auto; max-width: 750px; font-size: clamp(40px,7vw,88px); line-height: .88; }
+  .cta-sub { max-width: 520px; margin: 22px auto 30px; color: rgba(255,255,255,.72); font-size: 18px; line-height: 1.5; }
+  .cta-content .btn-primary { background: #fff; color: var(--ink); }
+
+  /* FOOTER */
+  footer { padding: 70px 0 30px; border-top: 1px solid var(--line); background: rgba(255,255,255,.28); }
+  .footer-grid { width: min(1180px,calc(100% - 40px)); margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 44px; }
+  .footer-brand-img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+  .footer-brand-name { display: block; margin-top: 14px; font-size: 13px; font-weight: 700; letter-spacing: .16em; }
+  .footer-brand-desc { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+  .footer-social { margin-top: 18px; display: flex; gap: 10px; }
+  .social-icon { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.5); display: grid; place-items: center; font-size: 12px; font-weight: 700; transition: background .2s ease, transform .2s ease; }
+  .social-icon:hover { background: var(--ink); transform: translateY(-2px); }
+  .social-icon:hover svg { fill: #fff; }
+  .social-icon svg { width: 18px; height: 18px; fill: var(--ink); transition: fill .2s ease; }
+  .social-icon:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
+  .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .footer-links { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: var(--ink-soft); font-size: 14px; font-weight: 500; transition: color .2s ease; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-bottom { width: min(1180px,calc(100% - 40px)); margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom-text { color: var(--muted); font-size: 13px; }
+  .footer-bottom-links { display: flex; gap: 20px; }
+  .footer-bottom-links a { color: var(--muted); font-size: 13px; font-weight: 600; transition: color .2s ease; }
+  .footer-bottom-links a:hover { color: var(--ink); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-panel { min-height: 360px; }
+    .panel-metrics { grid-template-columns: repeat(3,1fr); }
+    .work-grid { grid-template-columns: repeat(2,1fr); }
+    .metrics-grid { grid-template-columns: repeat(2,1fr); }
+    .brands-grid { grid-template-columns: repeat(2,1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+  }
+  @media (max-width: 600px) {
+    .work-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2,1fr); }
+    .brands-grid { grid-template-columns: repeat(2,1fr); }
+    .footer-grid { grid-template-columns: 1fr; }
+    .brands-intro { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html" aria-label="Prime8Agency home">
+    <img class="nav-logo-img" src="prime8agency-logo.png" alt="Prime8Agency Logo" />
+    <span class="nav-logo-text">PRIME8AGENCY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li>
+    <li><a href="creators.html">Creators</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location='index.html#contact'">Book a Call</button>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#services" onclick="closeMenu()">Services</a>
+  <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+  <a href="creators.html" onclick="closeMenu()">Creators</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <button class="nav-cta" onclick="window.location='index.html#contact';closeMenu()">Book a Call</button>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-kicker"><span class="pulse-dot"></span>Creative Work</div>
+      <h1 class="hero-h1">Work that converts.<br>Brands that <span class="italic">scale.</span></h1>
+      <p class="hero-sub">Ad creatives, reel edits, landing pages, UGC campaigns, branding, and websites — built for eCommerce brands that want results and look premium.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="window.location='index.html#contact'">Start a Project</button>
+        <a class="btn-secondary" href="creators.html">Creator Network</a>
+      </div>
+    </div>
+    <div class="hero-panel reveal tilt">
+      <div class="panel-content">
+        <div>
+          <div class="panel-label">Creative Output</div>
+          <div class="panel-title">Performance-first creative systems for modern brands.</div>
+        </div>
+        <div>
+          <div class="panel-metrics">
+            <div class="panel-metric"><strong>100K+</strong><span>Creator Reach</span></div>
+            <div class="panel-metric"><strong>961K</strong><span>Reel Views</span></div>
+            <div class="panel-metric"><strong>16+</strong><span>Network Creators</span></div>
+          </div>
+          <div class="panel-bar">
+            <div class="pbar-row"><span class="pbar-label">Ad Creative</span><div class="pbar-track"><div class="pbar-fill" style="width:92%"></div></div></div>
+            <div class="pbar-row"><span class="pbar-label">Reel Editing</span><div class="pbar-track"><div class="pbar-fill" style="width:88%"></div></div></div>
+            <div class="pbar-row"><span class="pbar-label">Web Dev</span><div class="pbar-track"><div class="pbar-fill" style="width:80%"></div></div></div>
+            <div class="pbar-row"><span class="pbar-label">UGC</span><div class="pbar-track"><div class="pbar-fill" style="width:95%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK GRID -->
+<section class="section-pad">
+  <div class="container">
+    <div class="section-head reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:0">
+      <div>
+        <div class="eyebrow">Our Work</div>
+        <h2 class="section-title">Built for brands that need to <span class="accent">look expensive.</span></h2>
+      </div>
+      <p class="section-copy" style="max-width:380px;margin:0">Every creative output is designed for attention, conversion, and brand authority.</p>
+    </div>
+
+    <div class="filter-bar reveal" id="filterBar">
+      <button class="filter-btn active" data-filter="all" onclick="filterWork(this,'all')">All Work</button>
+      <button class="filter-btn" data-filter="ad" onclick="filterWork(this,'ad')">Ad Creatives</button>
+      <button class="filter-btn" data-filter="editing" onclick="filterWork(this,'editing')">Reel Editing</button>
+      <button class="filter-btn" data-filter="web" onclick="filterWork(this,'web')">Websites</button>
+      <button class="filter-btn" data-filter="branding" onclick="filterWork(this,'branding')">Branding</button>
+      <button class="filter-btn" data-filter="ugc" onclick="filterWork(this,'ugc')">UGC</button>
+    </div>
+
+    <div class="work-grid reveal" id="workGrid">
+
+      <!-- Card 1: Reel Editing -->
+      <div class="work-card tilt" data-category="editing">
+        <div class="work-thumb wbg-1">
+          <div class="mock-wrap mock-dark">
+            <div class="mock-reel">
+              <div class="mock-reel-play">▶</div>
+              <div class="mock-reel-hook">"This Brand Was Dead.<br>We Fixed It."</div>
+              <div class="mock-reel-sub">Fast Cuts · Hook Optimized</div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">Reel Editing</span>
+          <div class="work-title">High-Retention Short Form</div>
+          <div class="work-sub">Fast cuts, clean hooks, retention-focused edits</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Website -->
+      <div class="work-card tilt" data-category="web">
+        <div class="work-thumb wbg-2">
+          <div class="mock-wrap mock-light">
+            <div class="mock-site">
+              <div class="mock-nav-bar">
+                <div class="mock-dot mock-dot-r"></div>
+                <div class="mock-dot mock-dot-y"></div>
+                <div class="mock-dot mock-dot-g"></div>
+                <div class="mock-url"></div>
+              </div>
+              <div class="mock-hero-block"><div class="mock-hero-text"></div></div>
+              <div class="mock-cards-row">
+                <div class="mock-mini-card"></div>
+                <div class="mock-mini-card"></div>
+                <div class="mock-mini-card"></div>
+              </div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">Website</span>
+          <div class="work-title">Premium Landing Page</div>
+          <div class="work-sub">Conversion-optimized design for eCommerce brands</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Ad Creative -->
+      <div class="work-card tilt" data-category="ad">
+        <div class="work-thumb wbg-3">
+          <div class="mock-wrap mock-dark">
+            <div class="mock-poster">
+              <div class="mock-poster-eyebrow">Ad Creative · Meta</div>
+              <div class="mock-poster-line"></div>
+              <div class="mock-poster-title">Infinite Growth.<br>Intelligently Engineered.</div>
+              <div class="mock-poster-sub">Prime8Agency × Brand</div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">Ad Creative</span>
+          <div class="work-title">Cinematic Meta Ad Creative</div>
+          <div class="work-sub">Dark luxury visual with conversion copy</div>
+        </div>
+      </div>
+
+      <!-- Card 4: UGC -->
+      <div class="work-card tilt" data-category="ugc">
+        <div class="work-thumb wbg-4">
+          <div class="mock-wrap mock-light">
+            <div class="mock-ugc">
+              <div class="mock-ugc-img"><span class="mock-ugc-tag">UGC · Skincare</span></div>
+              <div class="mock-ugc-row">
+                <div class="mock-ugc-pill"></div>
+                <div class="mock-ugc-pill" style="flex:1.5"></div>
+              </div>
+              <div class="mock-ugc-row">
+                <div class="mock-ugc-pill" style="flex:2"></div>
+                <div class="mock-ugc-pill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">UGC Campaign</span>
+          <div class="work-title">Creator-Led Product Content</div>
+          <div class="work-sub">Authentic UGC for beauty & skincare brands</div>
+        </div>
+      </div>
+
+      <!-- Card 5: Video Edit -->
+      <div class="work-card tilt" data-category="editing">
+        <div class="work-thumb wbg-5">
+          <div class="mock-wrap mock-dark">
+            <div class="mock-edit">
+              <div class="mock-edit-screen"><span class="mock-edit-badge">Before → After</span></div>
+              <div class="mock-timeline">
+                <div class="mock-tl-row">
+                  <div class="mock-tl-clip mock-tl-v"></div>
+                  <div class="mock-tl-clip mock-tl-v" style="width:20%"></div>
+                  <div class="mock-tl-clip mock-tl-v" style="width:15%"></div>
+                </div>
+                <div class="mock-tl-row">
+                  <div class="mock-tl-clip mock-tl-a"></div>
+                  <div class="mock-tl-clip mock-tl-a" style="width:40%"></div>
+                </div>
+                <div class="mock-tl-row">
+                  <div class="mock-tl-clip mock-tl-t"></div>
+                  <div class="mock-tl-clip mock-tl-t" style="width:30%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">Video Editing</span>
+          <div class="work-title">Cinematic Edit Production</div>
+          <div class="work-sub">Premiere Pro · After Effects · AI-enhanced</div>
+        </div>
+      </div>
+
+      <!-- Card 6: Branding -->
+      <div class="work-card tilt" data-category="branding">
+        <div class="work-thumb wbg-6">
+          <div class="mock-wrap mock-light">
+            <div class="mock-brand">
+              <div class="mock-brand-logo">PRIME8AGENCY</div>
+              <div class="mock-brand-colors">
+                <div class="mock-swatch" style="background:#111114"></div>
+                <div class="mock-swatch" style="background:#3f4148"></div>
+                <div class="mock-swatch" style="background:#fbfaf7"></div>
+                <div class="mock-swatch" style="background:#e8e2d7"></div>
+              </div>
+              <div class="mock-brand-lines">
+                <div class="mock-brand-line"></div>
+                <div class="mock-brand-line w80"></div>
+                <div class="mock-brand-line w55"></div>
+              </div>
+            </div>
+          </div>
+          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
+        </div>
+        <div class="work-info">
+          <span class="work-tag">Branding</span>
+          <div class="work-title">Brand Identity System</div>
+          <div class="work-sub">Logo, color, typography & visual direction</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="section-pad">
+  <div class="container">
+    <div class="metrics-strip reveal">
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <div class="metric-num">100K+</div>
+          <div class="metric-label">Combined Creator Reach</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-num">961K</div>
+          <div class="metric-label">Reel Views Generated</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-num">16+</div>
+          <div class="metric-label">Active Network Creators</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-num">8+</div>
+          <div class="metric-label">Content Niches Covered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND CONNECTIONS -->
+<section class="section-pad" style="padding-top:0">
+  <div class="container">
+    <div class="brands-section reveal">
+      <div class="brands-intro">
+        <div>
+          <div class="eyebrow">Brand Connections</div>
+          <h2 class="section-title" style="font-size:clamp(28px,4vw,48px)">Brands we're <span class="accent">in conversation with.</span></h2>
+        </div>
+        <span class="brand-note">Active Outreach · Not Official Partners</span>
+      </div>
+      <div class="brands-grid">
+        <div class="brand-card">
+          <div class="brand-logo-mock">D&K</div>
+          <div class="brand-name">Dot & Key</div>
+          <div class="brand-status">In Conversation</div>
+        </div>
+        <div class="brand-card">
+          <div class="brand-logo-mock">VLV</div>
+          <div class="brand-name">Velovina</div>
+          <div class="brand-status">In Conversation</div>
+        </div>
+        <div class="brand-card">
+          <div class="brand-logo-mock">NVD</div>
+          <div class="brand-name">NeutraVed</div>
+          <div class="brand-status">In Conversation</div>
+        </div>
+        <div class="brand-card">
+          <div class="brand-logo-mock">REQ</div>
+          <div class="brand-name">Re'equil</div>
+          <div class="brand-status">In Conversation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-content reveal">
+      <div class="cta-inner">
+        <div class="cta-label"><span></span>Ready to Scale?</div>
+        <h2 class="cta-h2">Have a project in mind?</h2>
+        <p class="cta-sub">Book a free strategy call and we'll map out how to grow your brand with creative systems that actually perform.</p>
+        <button class="btn-primary" onclick="window.location='index.html#contact'">Book a Free Call</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <img class="footer-brand-img" src="prime8agency-logo.png" alt="Logo" />
+      <span class="footer-brand-name">PRIME8AGENCY</span>
+      <p class="footer-brand-desc">AI-powered creative growth agency. Infinite growth, intelligently engineered.</p>
+      <div class="footer-social"><a class="social-icon" href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a></div>
+    </div>
+    <div>
+      <div class="footer-col-title">Work</div>
+      <ul class="footer-links">
+        <li><a href="portfolio.html">All Work</a></li>
+        <li><a href="portfolio.html">Ad Creatives</a></li>
+        <li><a href="portfolio.html">Reel Editing</a></li>
+        <li><a href="portfolio.html">Websites</a></li>
+        <li><a href="portfolio.html">Branding</a></li>
+        <li><a href="portfolio.html">UGC</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="creators.html">Creator Network</a></li>
+        <li><a href="index.html#process">Process</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="index.html" onclick="sessionStorage.setItem('openPage','privacy');return true;">Privacy Policy</a></li>
+        <li><a href="index.html" onclick="sessionStorage.setItem('openPage','terms');return true;">Terms & Conditions</a></li>
+      </ul>
+      <div style="margin-top:24px">
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:contact@prime8agency.site">contact@prime8agency.site</a></li>
+          <li><a href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener">@prime8agency</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-text">Copyright 2026 Prime8Agency. All rights reserved.</div>
+    <div class="footer-bottom-links"><a href="portfolio.html">Portfolio</a><a href="creators.html">Creators</a></div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function mkParticle() { return { x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.6+.4, dx: (Math.random()-.5)*.25, dy: (Math.random()-.5)*.25, a: Math.random()*.32+.1 }; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i = 0; i < 80; i++) particles.push(mkParticle());
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p => {
+      p.x+=p.dx; p.y+=p.dy;
+      if(p.x<0||p.x>W)p.dx*=-1; if(p.y<0||p.y>H)p.dy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(17,17,20,'+p.a+')'; ctx.fill();
+    });
+    for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++) {
+      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<130){ ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.strokeStyle='rgba(17,17,20,'+(0.055*(1-dist/130))+')'; ctx.lineWidth=.6; ctx.stroke(); }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+reveals.forEach(el=>obs.observe(el));
+document.querySelectorAll('.tilt').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5, y=(e.clientY-rect.top)/rect.height-.5;
+    card.style.transform='perspective(900px) rotateX('+(-y*4)+'deg) rotateY('+(x*4)+'deg) translateY(-2px)';
+  });
+  card.addEventListener('mouseleave',()=>{ card.style.transform=''; });
+});
+function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+function filterWork(btn, filter) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.work-card').forEach(card=>{
+    if(filter==='all'||card.dataset.category===filter){
+      card.style.display=''; card.style.opacity='1'; card.style.transform='';
+    } else {
+      card.style.display='none';
+    }
+  });
+}
+</script>
+</body>
+</html>
