@@ -176,6 +176,21 @@
   .ctag { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.5); color: var(--ink-soft); font-size: 11px; font-weight: 600; }
   .creator-style { margin-top: 10px; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 
+  /* SEARCH BAR */
+  .search-bar-wrap { margin-top: 28px; position: relative; max-width: 520px; }
+  .search-bar-wrap input {
+    width: 100%; height: 52px; padding: 0 20px 0 48px;
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    background: rgba(255,255,255,.72); backdrop-filter: blur(12px);
+    font: inherit; font-size: 15px; color: var(--ink); outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+    box-shadow: 0 4px 16px rgba(17,17,20,.06);
+  }
+  .search-bar-wrap input::placeholder { color: var(--muted); }
+  .search-bar-wrap input:focus { border-color: var(--ink); box-shadow: 0 4px 24px rgba(17,17,20,.12); }
+  .search-bar-wrap .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 16px; }
+  .no-results { display: none; text-align: center; padding: 48px 24px; color: var(--muted); font-size: 16px; font-weight: 600; grid-column: 1/-1; }
+
   /* EDITOR SECTION */
   .editors-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 36px; }
   .editor-card { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.42); transition: transform .25s ease, background .25s ease; }
@@ -345,7 +360,7 @@
           </div>
         </div>
         <div class="panel-bottom-stats">
-          <div class="p-stat"><strong>22+</strong><span>Active Creators</span></div>
+          <div class="p-stat"><strong>23+</strong><span>Active Creators</span></div>
           <div class="p-stat"><strong>10+</strong><span>Niches</span></div>
           <div class="p-stat"><strong>5M+</strong><span>Creator Reach</span></div>
         </div>
@@ -358,7 +373,7 @@
 <section style="padding: 0 0 80px">
   <div class="container">
     <div class="stats-bar reveal">
-      <div class="stats-bar-item"><div class="stats-bar-dot"></div>22+ Active Creators</div>
+      <div class="stats-bar-item"><div class="stats-bar-dot"></div>23+ Active Creators</div>
       <div class="stats-bar-item"><div class="stats-bar-dot"></div>10+ Content Niches</div>
       <div class="stats-bar-item"><div class="stats-bar-dot"></div>5M+ Creator Reach</div>
       <div class="stats-bar-item"><div class="stats-bar-dot"></div>50M+ Reel Views</div>
@@ -425,10 +440,42 @@
       <div>
         <div class="eyebrow">The Network</div>
         <h2 class="section-title">Meet the <span class="accent">creators.</span></h2>
+        <div class="search-bar-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="creatorSearch" placeholder="Search creators &amp; editors by name, niche, or location…" oninput="filterCards()" />
+        </div>
       </div>
       <button class="btn-primary" onclick="window.open('https://forms.gle/MqNjh3ZMxbCKpHEg8','_blank')">Join Them →</button>
     </div>
-    <div class="creators-grid reveal">
+    <div class="creators-grid reveal" id="creatorsGrid">
+
+      <!-- A -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-5" style="background:linear-gradient(145deg,#d8ecd8,#a8c8a8)"><div class="creator-avatar" style="background:#3a7a3a">AR</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Akash Raj</div>
+          <div class="creator-tags"><span class="ctag">Gym</span><span class="ctag">Fitness</span></div>
+          <div class="creator-style">Fitness content · Jharkhand, India</div>
+        </div>
+      </div>
+
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-11"><div class="creator-avatar" style="background:#444">AJ</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Ajitya Raj Solanky</div>
+          <div class="creator-tags"><span class="ctag">Cinematic</span><span class="ctag">Visual Storytelling</span></div>
+          <div class="creator-style">Dark editorial · India</div>
+        </div>
+      </div>
+
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-8" style="background:linear-gradient(145deg,#f0d8e8,#d8a8c8)"><div class="creator-avatar" style="background:#c84a8a">AM</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Arousa Muneer</div>
+          <div class="creator-tags"><span class="ctag">Food</span><span class="ctag">Travel</span><span class="ctag">Lifestyle</span></div>
+          <div class="creator-style">Multi-niche UGC · Hyderabad, Pakistan</div>
+        </div>
+      </div>
 
       <div class="creator-card tilt">
         <div class="creator-visual cv-1"><div class="creator-avatar" style="background:#c8854a">AV</div></div>
@@ -436,6 +483,64 @@
           <div class="creator-name">Avani Verma</div>
           <div class="creator-tags"><span class="ctag">UGC</span><span class="ctag">Lifestyle</span></div>
           <div class="creator-style">Digital creator · Delhi, India</div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-7"><div class="creator-avatar" style="background:#4ac8b8">BH</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Barsha Halder</div>
+          <div class="creator-tags"><span class="ctag">UGC</span></div>
+          <div class="creator-style">UGC creator · West Bengal, India</div>
+        </div>
+      </div>
+
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-2" style="background:linear-gradient(145deg,#e8d8f0,#c8a8d8)"><div class="creator-avatar" style="background:#8a4ac8">BD</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Bhavana Desai</div>
+          <div class="creator-tags"><span class="ctag">Beauty</span><span class="ctag">Skincare</span><span class="ctag">UGC</span></div>
+          <div class="creator-style">Faceless aesthetic · Bengaluru, India</div>
+        </div>
+      </div>
+
+      <!-- H -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-3" style="background:linear-gradient(145deg,#d3e8f0,#a0cee8)"><div class="creator-avatar" style="background:#3a7abf">HB</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Hironmoyee Borah</div>
+          <div class="creator-tags"><span class="ctag">Beauty</span><span class="ctag">UGC</span></div>
+          <div class="creator-style">Beauty & UGC · Assam, India</div>
+        </div>
+      </div>
+
+      <!-- I -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-7" style="background:linear-gradient(145deg,#d3f0e8,#a0d8c0)"><div class="creator-avatar" style="background:#2a9a6a">IM</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Isha Mahato</div>
+          <div class="creator-tags"><span class="ctag">Food</span><span class="ctag">Local Lifestyle</span></div>
+          <div class="creator-style">Jamshedpur local · Jharkhand, India</div>
+        </div>
+      </div>
+
+      <!-- M -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-1" style="background:linear-gradient(145deg,#f5f0e0,#e8d8a8)"><div class="creator-avatar" style="background:#b89a3a">MK</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Manya Khare</div>
+          <div class="creator-tags"><span class="ctag">Lifestyle</span><span class="ctag">Food</span></div>
+          <div class="creator-style">Food & lifestyle · Uttar Pradesh, India</div>
+        </div>
+      </div>
+
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-8"><div class="creator-avatar" style="background:#a84ac8">MM</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Mehwish Memon</div>
+          <div class="creator-tags"><span class="ctag">Fashion</span><span class="ctag">Makeup</span><span class="ctag">Lifestyle</span></div>
+          <div class="creator-style">Beauty & lifestyle · Chhattisgarh, India</div>
         </div>
       </div>
 
@@ -457,30 +562,42 @@
         </div>
       </div>
 
+      <!-- N -->
       <div class="creator-card tilt">
-        <div class="creator-visual cv-5"><div class="creator-avatar" style="background:#5a8c4a">YV</div></div>
+        <div class="creator-visual cv-4" style="background:linear-gradient(145deg,#f5d8e8,#e8a8c8)"><div class="creator-avatar" style="background:#d44a8a">NI</div></div>
         <div class="creator-body">
-          <div class="creator-name">Yashveer</div>
-          <div class="creator-tags"><span class="ctag">Fitness</span><span class="ctag">Gym</span><span class="ctag">Lifestyle</span></div>
-          <div class="creator-style">Motivational · New Delhi, India</div>
+          <div class="creator-name">Nisha</div>
+          <div class="creator-tags"><span class="ctag">GRWM</span><span class="ctag">Styling</span><span class="ctag">Beauty</span></div>
+          <div class="creator-style">Reviews & lifestyle · Delhi, India</div>
         </div>
       </div>
 
       <div class="creator-card tilt">
-        <div class="creator-visual cv-8"><div class="creator-avatar" style="background:#a84ac8">MM</div></div>
+        <div class="creator-visual cv-9"><div class="creator-avatar" style="background:#6b8ec8">NK</div></div>
         <div class="creator-body">
-          <div class="creator-name">Mehwish Memon</div>
-          <div class="creator-tags"><span class="ctag">Fashion</span><span class="ctag">Makeup</span><span class="ctag">Lifestyle</span></div>
-          <div class="creator-style">Beauty & lifestyle · Chhattisgarh, India</div>
+          <div class="creator-name">Nisha Kapoor</div>
+          <div class="creator-tags"><span class="ctag">Jewellery</span><span class="ctag">Lifestyle</span></div>
+          <div class="creator-style">Jewellery & media · Haryana, India</div>
         </div>
       </div>
 
+      <!-- R -->
       <div class="creator-card tilt">
-        <div class="creator-visual cv-6"><div class="creator-avatar" style="background:#c8a84a">TP</div></div>
+        <div class="creator-visual cv-12"><div class="creator-avatar" style="background:#555">RB</div></div>
         <div class="creator-body">
-          <div class="creator-name">Twinkle Prusty</div>
-          <div class="creator-tags"><span class="ctag">Skincare</span><span class="ctag">Makeup</span><span class="ctag">Fashion</span></div>
-          <div class="creator-style">Lifestyle & beauty · Odisha, India</div>
+          <div class="creator-name">Rabia</div>
+          <div class="creator-tags"><span class="ctag">UGC</span><span class="ctag">Fashion</span><span class="ctag">Food</span></div>
+          <div class="creator-style">Multi-niche reviews · Hyderabad, Pakistan</div>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="creator-card tilt">
+        <div class="creator-visual cv-3"><div class="creator-avatar" style="background:#4a8ec8">SS</div></div>
+        <div class="creator-body">
+          <div class="creator-name">Sanchita Saharoy</div>
+          <div class="creator-tags"><span class="ctag">Beauty</span><span class="ctag">Skincare</span><span class="ctag">Fashion</span></div>
+          <div class="creator-style">Full lifestyle · Maharashtra, India</div>
         </div>
       </div>
 
@@ -494,60 +611,6 @@
       </div>
 
       <div class="creator-card tilt">
-        <div class="creator-visual cv-7"><div class="creator-avatar" style="background:#4ac8b8">BH</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Barsha Halder</div>
-          <div class="creator-tags"><span class="ctag">UGC</span></div>
-          <div class="creator-style">UGC creator · West Bengal, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-3"><div class="creator-avatar" style="background:#4a8ec8">SS</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Sanchita Saharoy</div>
-          <div class="creator-tags"><span class="ctag">Beauty</span><span class="ctag">Skincare</span><span class="ctag">Fashion</span></div>
-          <div class="creator-style">Full lifestyle · Maharashtra, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-1" style="background:linear-gradient(145deg,#f5f0e0,#e8d8a8)"><div class="creator-avatar" style="background:#b89a3a">MK</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Manya Khare</div>
-          <div class="creator-tags"><span class="ctag">Lifestyle</span><span class="ctag">Food</span></div>
-          <div class="creator-style">Food & lifestyle · Uttar Pradesh, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-5" style="background:linear-gradient(145deg,#d8ecd8,#a8c8a8)"><div class="creator-avatar" style="background:#3a7a3a">AR</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Akash Raj</div>
-          <div class="creator-tags"><span class="ctag">Gym</span><span class="ctag">Fitness</span></div>
-          <div class="creator-style">Fitness content · Jharkhand, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-7" style="background:linear-gradient(145deg,#d3f0e8,#a0d8c0)"><div class="creator-avatar" style="background:#2a9a6a">IM</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Isha Mahato</div>
-          <div class="creator-tags"><span class="ctag">Food</span><span class="ctag">Local Lifestyle</span></div>
-          <div class="creator-style">Jamshedpur local · Jharkhand, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-8" style="background:linear-gradient(145deg,#f0d8e8,#d8a8c8)"><div class="creator-avatar" style="background:#c84a8a">AM</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Arousa Muneer</div>
-          <div class="creator-tags"><span class="ctag">Food</span><span class="ctag">Travel</span><span class="ctag">Lifestyle</span></div>
-          <div class="creator-style">Multi-niche UGC · Hyderabad, Pakistan</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
         <div class="creator-visual cv-6" style="background:linear-gradient(145deg,#f0e8d8,#d8c8a8)"><div class="creator-avatar" style="background:#c8984a">SB2</div></div>
         <div class="creator-body">
           <div class="creator-name">Sujalini Behera</div>
@@ -556,50 +619,27 @@
         </div>
       </div>
 
+      <!-- T -->
       <div class="creator-card tilt">
-        <div class="creator-visual cv-11"><div class="creator-avatar" style="background:#444">AJ</div></div>
+        <div class="creator-visual cv-6"><div class="creator-avatar" style="background:#c8a84a">TP</div></div>
         <div class="creator-body">
-          <div class="creator-name">Ajitya Raj Solanky</div>
-          <div class="creator-tags"><span class="ctag">Cinematic</span><span class="ctag">Visual Storytelling</span></div>
-          <div class="creator-style">Dark editorial · India</div>
+          <div class="creator-name">Twinkle Prusty</div>
+          <div class="creator-tags"><span class="ctag">Skincare</span><span class="ctag">Makeup</span><span class="ctag">Fashion</span></div>
+          <div class="creator-style">Lifestyle & beauty · Odisha, India</div>
         </div>
       </div>
 
+      <!-- Y -->
       <div class="creator-card tilt">
-        <div class="creator-visual cv-2" style="background:linear-gradient(145deg,#e8d8f0,#c8a8d8)"><div class="creator-avatar" style="background:#8a4ac8">BD</div></div>
+        <div class="creator-visual cv-5"><div class="creator-avatar" style="background:#5a8c4a">YV</div></div>
         <div class="creator-body">
-          <div class="creator-name">Bhavana Desai</div>
-          <div class="creator-tags"><span class="ctag">Beauty</span><span class="ctag">Skincare</span><span class="ctag">UGC</span></div>
-          <div class="creator-style">Faceless aesthetic · Bengaluru, India</div>
+          <div class="creator-name">Yashveer</div>
+          <div class="creator-tags"><span class="ctag">Fitness</span><span class="ctag">Gym</span><span class="ctag">Lifestyle</span></div>
+          <div class="creator-style">Motivational · New Delhi, India</div>
         </div>
       </div>
 
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-9"><div class="creator-avatar" style="background:#6b8ec8">NK</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Nisha Kapoor</div>
-          <div class="creator-tags"><span class="ctag">Jewellery</span><span class="ctag">Lifestyle</span></div>
-          <div class="creator-style">Jewellery & media · Haryana, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-4" style="background:linear-gradient(145deg,#f5d8e8,#e8a8c8)"><div class="creator-avatar" style="background:#d44a8a">NI</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Nisha</div>
-          <div class="creator-tags"><span class="ctag">GRWM</span><span class="ctag">Styling</span><span class="ctag">Beauty</span></div>
-          <div class="creator-style">Reviews & lifestyle · Delhi, India</div>
-        </div>
-      </div>
-
-      <div class="creator-card tilt">
-        <div class="creator-visual cv-12"><div class="creator-avatar" style="background:#555">RB</div></div>
-        <div class="creator-body">
-          <div class="creator-name">Rabia</div>
-          <div class="creator-tags"><span class="ctag">UGC</span><span class="ctag">Fashion</span><span class="ctag">Food</span></div>
-          <div class="creator-style">Multi-niche reviews · Hyderabad, Pakistan</div>
-        </div>
-      </div>
+      <div class="no-results" id="noResults">No creators or editors found matching your search.</div>
 
     </div>
   </div>
@@ -845,6 +885,25 @@ document.querySelectorAll('.tilt').forEach(card=>{
   });
   card.addEventListener('mouseleave',()=>{ card.style.transform=''; });
 });
+function filterCards() {
+  const q = document.getElementById('creatorSearch').value.toLowerCase().trim();
+  const grid = document.getElementById('creatorsGrid');
+  const cards = grid.querySelectorAll('.creator-card, .editor-card');
+  let visibleCount = 0;
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    const show = !q || text.includes(q);
+    card.style.display = show ? '' : 'none';
+    if (show) visibleCount++;
+  });
+  // also search editors section
+  document.querySelectorAll('.editor-card').forEach(card => {
+    const text = card.innerText.toLowerCase();
+    const show = !q || text.includes(q);
+    card.style.display = show ? '' : 'none';
+  });
+  document.getElementById('noResults').style.display = (visibleCount === 0 && q) ? 'block' : 'none';
+}
 function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
 function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
 </script>
