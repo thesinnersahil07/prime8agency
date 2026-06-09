@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Portfolio — Prime8Agency</title>
+<title>Portfolio — Prime8Agency.site</title>
 <meta name="description" content="Prime8Agency creative work — ad creatives, reel edits, landing pages, branding, UGC campaigns and more." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,27 +24,28 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    margin: 0;
-    color: var(--ink);
-    background: radial-gradient(circle at 50% -10%, rgba(255,255,255,.95), transparent 32rem),
-      linear-gradient(135deg, #fbfaf7 0%, #ede8de 48%, #faf8f2 100%);
-    font-family: var(--font);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+    margin: 0; color: var(--ink);
+    background: radial-gradient(circle at 50% -10%, rgba(255,255,255,.95), transparent 32rem), linear-gradient(135deg, #fbfaf7 0%, #ede8de 48%, #faf8f2 100%);
+    font-family: var(--font); overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    cursor: none; /* Custom Mouse Tracker */
   }
-  body::before {
-    content: "";
-    position: fixed; inset: 0; z-index: -3; pointer-events: none;
-    background-image: linear-gradient(rgba(17,17,20,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,20,.045) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.7) 46%, transparent 100%);
+  @media (max-width: 768px) { body { cursor: auto; } }
+  
+  /* Mouse Tracker */
+  .mouse-tracker {
+    position: fixed; top: 0; left: 0; width: 12px; height: 12px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s; box-shadow: 0 0 10px rgba(17,17,20,0.3);
   }
-  body::after {
-    content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: .13;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  }
+  .mouse-tracker.hover-active { width: 48px; height: 48px; background: rgba(17,17,20,0.1); border: 1px solid var(--line-strong); box-shadow: none; backdrop-filter: blur(2px); }
+  @media (max-width: 768px) { .mouse-tracker { display: none; } }
+
+  body::before { content: ""; position: fixed; inset: 0; z-index: -3; pointer-events: none; background-image: linear-gradient(rgba(17,17,20,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,20,.045) 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.7) 46%, transparent 100%); }
+  body::after { content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: .13; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"); }
+  
+  a, button { cursor: none; }
+  @media (max-width: 768px) { a, button { cursor: pointer; } }
   a { color: inherit; text-decoration: none; }
-  button, input, select { font: inherit; }
+  button, input, select, textarea { font: inherit; }
   ::selection { background: #111114; color: #fff; }
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--paper-2); }
@@ -85,10 +86,8 @@
   .mobile-menu a { background: rgba(17,17,20,.055); display: block; }
 
   /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
-
-  /* TILT */
+  .reveal { opacity: 0; transform: translateY(40px) scale(0.96); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0) scale(1); }
   .tilt { transition: transform .25s ease; }
 
   /* HERO */
@@ -142,11 +141,12 @@
   .work-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 36px; }
   .work-card {
     border: 1px solid var(--line); border-radius: 24px; background: rgba(255,255,255,.42); box-shadow: 0 18px 48px rgba(17,17,20,.08);
-    overflow: hidden; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease;
+    overflow: hidden; cursor: pointer; transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .4s ease; display: flex; flex-direction: column;
   }
   .work-card:hover { transform: translateY(-7px); box-shadow: 0 26px 70px rgba(17,17,20,.16); }
-  .work-thumb { min-height: 240px; position: relative; display: grid; place-items: center; overflow: hidden; }
+  .work-thumb { height: 260px; position: relative; display: grid; place-items: center; overflow: hidden; }
   .work-thumb::before { content: ""; position: absolute; inset: 0; opacity: .7; background-image: linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px); background-size: 30px 30px; }
+  
   .wbg-1 { background: linear-gradient(145deg,#0a0a0b,#2a2b31); }
   .wbg-2 { background: linear-gradient(145deg,#f6f4ef,#cfc7b8); }
   .wbg-3 { background: linear-gradient(145deg,#1b1c20,#070708); }
@@ -154,69 +154,15 @@
   .wbg-5 { background: linear-gradient(145deg,#101115,#343640); }
   .wbg-6 { background: linear-gradient(145deg,#e8e2d7,#ffffff); }
 
-  /* MOCK VISUALS */
-  .mock-wrap { position: relative; z-index: 1; width: 72%; padding: 16px; border-radius: 18px; transition: transform .25s ease; }
-  .work-card:hover .mock-wrap { transform: scale(1.04); }
+  /* MOCK VISUALS (WITH REAL IMAGES PLACED INSIDE) */
+  .mock-wrap { position: relative; z-index: 1; width: 72%; padding: 12px; border-radius: 18px; transition: transform .5s cubic-bezier(0.22, 1, 0.36, 1); }
+  .work-card:hover .mock-wrap { transform: scale(1.06); }
   .mock-dark { border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); backdrop-filter: blur(12px); }
   .mock-light { border: 1px solid rgba(17,17,20,.1); background: rgba(255,255,255,.65); backdrop-filter: blur(12px); }
-  /* reel thumbnail mock */
-  .mock-reel { min-height: 140px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 14px; border-radius: 14px; background: linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85)); position: relative; overflow: hidden; }
-  .mock-reel::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); opacity: .9; }
-  .mock-reel-hook { position: relative; z-index: 1; color: #fff; font-size: 13px; font-weight: 700; line-height: 1.2; }
-  .mock-reel-sub { position: relative; z-index: 1; color: rgba(255,255,255,.6); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-  .mock-reel-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-70%); z-index: 1; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3); display: grid; place-items: center; color: #fff; font-size: 12px; }
-  /* website mock */
-  .mock-site { display: flex; flex-direction: column; gap: 8px; }
-  .mock-nav-bar { height: 28px; border-radius: 8px; background: rgba(255,255,255,.9); display: flex; align-items: center; padding: 0 10px; gap: 6px; }
-  .mock-dot { width: 7px; height: 7px; border-radius: 50%; }
-  .mock-dot-r { background: #ff5f57; }
-  .mock-dot-y { background: #ffbd2e; }
-  .mock-dot-g { background: #28ca41; }
-  .mock-url { flex: 1; height: 14px; border-radius: 4px; background: rgba(17,17,20,.08); margin-left: 6px; }
-  .mock-hero-block { height: 60px; border-radius: 8px; background: linear-gradient(135deg,#111114,#2a2b31); display: flex; align-items: flex-end; padding: 8px 10px; }
-  .mock-hero-text { height: 8px; width: 60%; border-radius: 4px; background: rgba(255,255,255,.7); }
-  .mock-cards-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
-  .mock-mini-card { height: 28px; border-radius: 6px; background: rgba(17,17,20,.08); }
-  /* branding mock */
-  .mock-brand { display: flex; flex-direction: column; gap: 10px; padding: 14px; }
-  .mock-brand-logo { height: 38px; border-radius: 10px; background: #111114; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
-  .mock-brand-colors { display: flex; gap: 6px; }
-  .mock-swatch { height: 22px; flex: 1; border-radius: 6px; }
-  .mock-brand-lines { display: flex; flex-direction: column; gap: 6px; }
-  .mock-brand-line { height: 8px; border-radius: 4px; background: rgba(17,17,20,.12); }
-  .mock-brand-line.w80 { width: 80%; }
-  .mock-brand-line.w55 { width: 55%; }
-  /* edit mock */
-  .mock-edit { display: flex; flex-direction: column; gap: 6px; }
-  .mock-edit-screen { height: 70px; border-radius: 10px; background: #0a0a0b; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .mock-edit-screen::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,#ff0000 0%,transparent 40%,transparent 60%,#0066ff 100%); opacity: .15; }
-  .mock-edit-badge { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 6px; color: #fff; font-size: 9px; font-weight: 700; padding: 4px 8px; letter-spacing: .06em; }
-  .mock-timeline { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: rgba(0,0,0,.6); border-radius: 8px; }
-  .mock-tl-row { display: flex; gap: 4px; }
-  .mock-tl-clip { height: 10px; border-radius: 3px; }
-  .mock-tl-v { background: rgba(255,80,80,.7); width: 35%; }
-  .mock-tl-a { background: rgba(80,120,255,.7); width: 25%; }
-  .mock-tl-t { background: rgba(255,200,0,.7); width: 18%; }
-  /* ugc mock */
-  .mock-ugc { display: flex; flex-direction: column; gap: 8px; }
-  .mock-ugc-img { height: 80px; border-radius: 12px; background: linear-gradient(135deg,#fde8d8,#f5c6a0); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-  .mock-ugc-tag { background: rgba(255,255,255,.85); border-radius: 6px; padding: 3px 8px; font-size: 9px; font-weight: 700; color: #111; letter-spacing: .06em; }
-  .mock-ugc-row { display: flex; gap: 6px; }
-  .mock-ugc-pill { flex: 1; height: 22px; border-radius: 99px; background: rgba(17,17,20,.08); }
-  /* poster mock */
-  .mock-poster { min-height: 140px; border-radius: 14px; display: flex; flex-direction: column; justify-content: space-between; padding: 14px; background: linear-gradient(145deg,#111114,#2b2d35); position: relative; overflow: hidden; }
-  .mock-poster::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%,rgba(255,255,255,.06),transparent 60%); }
-  .mock-poster-eyebrow { color: rgba(255,255,255,.45); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-  .mock-poster-title { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.15; position: relative; z-index: 1; }
-  .mock-poster-line { height: 1px; background: rgba(255,255,255,.12); margin: 8px 0; }
-  .mock-poster-sub { color: rgba(255,255,255,.4); font-size: 9px; font-weight: 600; letter-spacing: .08em; }
+  
+  .mock-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; display: block; }
 
-  /* overlay */
-  .work-overlay { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(8px); transition: opacity .25s ease; z-index: 3; }
-  .work-card:hover .work-overlay { opacity: 1; }
-  .overlay-pill { padding: 10px 16px; border: 1px solid rgba(255,255,255,.36); border-radius: 999px; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-
-  .work-info { padding: 22px; background: rgba(255,255,255,.55); }
+  .work-info { padding: 22px; background: rgba(255,255,255,.75); border-top: 1px solid var(--line); flex: 1; backdrop-filter: blur(10px); position: relative; z-index: 2;}
   .work-tag { color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .work-title { margin-top: 10px; font-size: 20px; font-weight: 700; }
   .work-sub { margin-top: 6px; color: var(--muted); font-size: 14px; }
@@ -228,7 +174,6 @@
   .metric-item { text-align: center; }
   .metric-num { font-size: clamp(32px,4vw,52px); font-weight: 700; line-height: 1; }
   .metric-label { margin-top: 10px; color: rgba(255,255,255,.6); font-size: 13px; font-weight: 600; line-height: 1.3; }
-  .metric-divider { width: 1px; background: rgba(255,255,255,.1); }
 
   /* BRAND CONNECTIONS */
   .brands-section { background: rgba(255,255,255,.38); border: 1px solid var(--line); border-radius: 28px; padding: 44px; }
@@ -246,9 +191,7 @@
   .cta-content { min-height: 420px; display: grid; place-items: center; text-align: center; padding: 50px 24px; border-radius: 34px; color: #fff; background: linear-gradient(140deg,rgba(255,255,255,.18),transparent 28%), linear-gradient(145deg,#050506,#24262d); box-shadow: var(--shadow); position: relative; overflow: hidden; }
   .cta-content::before { content: ""; position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px); background-size: 54px 54px; }
   .cta-inner { position: relative; z-index: 1; }
-  .cta-label { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,.7); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 18px; }
-  .cta-label span { width: 24px; height: 1px; background: rgba(255,255,255,.72); }
-  .cta-h2 { margin: 0 auto; max-width: 750px; font-size: clamp(40px,7vw,88px); line-height: .88; }
+  .cta-h2 { margin: 0 auto; max-width: 750px; font-size: clamp(36px,6vw,72px); line-height: .88; font-weight: 700; }
   .cta-sub { max-width: 520px; margin: 22px auto 30px; color: rgba(255,255,255,.72); font-size: 18px; line-height: 1.5; }
   .cta-content .btn-primary { background: #fff; color: var(--ink); }
 
@@ -266,13 +209,61 @@
   .social-icon:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
   .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
   .footer-links { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .footer-links a { color: var(--ink-soft); font-size: 14px; font-weight: 500; transition: color .2s ease; }
+  .footer-links a { color: var(--ink-soft); font-size: 14px; font-weight: 500; transition: color .2s ease; cursor: pointer; }
   .footer-links a:hover { color: var(--ink); }
   .footer-bottom { width: min(1180px,calc(100% - 40px)); margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
   .footer-bottom-text { color: var(--muted); font-size: 13px; }
   .footer-bottom-links { display: flex; gap: 20px; }
-  .footer-bottom-links a { color: var(--muted); font-size: 13px; font-weight: 600; transition: color .2s ease; }
+  .footer-bottom-links a { color: var(--muted); font-size: 13px; font-weight: 600; transition: color .2s ease; cursor: pointer; }
   .footer-bottom-links a:hover { color: var(--ink); }
+
+  /* OVERLAY PAGES (Privacy & Terms) */
+  .modal-overlay, .page-overlay {
+    position: fixed; inset: 0; z-index: 200; display: grid; padding: 20px;
+    background: rgba(5,5,6,.68); backdrop-filter: blur(16px); opacity: 0; pointer-events: none; transition: opacity .3s ease;
+  }
+  .modal-overlay { place-items: center; }
+  .page-overlay { place-items: start; overflow-y: auto; }
+  .modal-overlay.active, .page-overlay.active { opacity: 1; pointer-events: auto; }
+  
+  .page-content { width: min(920px, 100%); margin: 40px auto; padding: clamp(26px, 5vw, 54px); border-radius: 28px; background: var(--paper); box-shadow: 0 30px 90px rgba(0,0,0,.34); position: relative;}
+  .page-back { min-height: 44px; padding: 0 20px; background: var(--ink); color: #fff; font-weight: 700; border: none; border-radius: 999px; cursor: pointer; margin-bottom: 20px; transition: transform 0.2s ease;}
+  .page-back:hover { transform: translateY(-2px); }
+  .page-title { margin: 0 0 12px; font-size: clamp(42px, 7vw, 76px); line-height: .9; letter-spacing: -0.02em; font-weight: 700; }
+  .page-body { color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
+  .page-body h3 { margin: 32px 0 12px; color: var(--ink); font-size: 20px; font-weight: 700; }
+  .page-body ul { margin-top: 0; padding-left: 20px; }
+  .page-body li { margin-bottom: 8px; }
+  .page-body a { color: var(--ink); font-weight: 700; text-decoration: underline; }
+
+  /* MODAL */
+  .modal-box { width: min(620px, 100%); max-height: calc(100vh - 40px); overflow: auto; padding: 28px; border: 1px solid rgba(255,255,255,.2); border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(242,239,232,.98)); box-shadow: 0 30px 90px rgba(0,0,0,.34); transform: translateY(18px) scale(.95); transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1); }
+  .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+  .modal-close { float: right; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: #fff; cursor: pointer; font-size: 18px; }
+  .modal-title { margin: 18px 0 10px; font-size: clamp(34px, 6vw, 58px); line-height: .9; letter-spacing: 0; }
+  .modal-title span { color: var(--ink) !important; font-style: italic; }
+  .modal-sub { margin: 0 0 24px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+  .audit-benefits { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 24px; }
+  .audit-benefits span { background: rgba(17,17,20,.05); padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .form-group { margin-bottom: 16px; clear: both; }
+  .form-label { display: block; margin-bottom: 8px; color: var(--ink); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .form-input { width: 100%; min-height: 56px; padding: 0 16px; border: 1px solid var(--line); border-radius: 16px; outline: none; background: rgba(255,255,255,.76); color: var(--ink); transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+  .form-input:focus { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(17,17,20,.08); }
+  .form-input.error { border-color: #b42318; }
+  .form-textarea { width: 100%; min-height: 110px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; outline: none; background: rgba(255,255,255,.76); color: var(--ink); font-family: inherit; transition: border-color .2s ease, box-shadow .2s ease; resize: vertical; }
+  .form-textarea:focus { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(17,17,20,.08); }
+  .form-textarea.error { border-color: #b42318; }
+  .form-notice { background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.4); border-radius: 16px; padding: 16px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+  .form-notice strong { color: var(--ink); }
+  .form-error { display: none; margin-top: 7px; color: #b42318; font-size: 13px; }
+  .form-error.show { display: block; }
+  .form-submit { width: 100%; min-height: 58px; margin-top: 6px; font-size: 16px; border: 0; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease; color: #fff; background: linear-gradient(135deg, #0a0a0b, #30323a); font-weight: 700; cursor: pointer;}
+  .form-submit:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 20px 46px rgba(17,17,20,.24); }
+  .form-success { display: none; padding: 44px 10px; text-align: center; }
+  .form-success.show { display: block; }
+  .success-icon { width: 72px; height: 72px; display: grid; place-items: center; margin: 0 auto 18px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 800; font-size: 32px; }
+  .success-title { font-size: 36px; font-weight: 700; }
+  .success-sub { max-width: 460px; margin: 12px auto 0; color: var(--muted); line-height: 1.55; }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -292,16 +283,20 @@
     .brands-grid { grid-template-columns: repeat(2,1fr); }
     .footer-grid { grid-template-columns: 1fr; }
     .brands-intro { flex-direction: column; align-items: flex-start; }
+    .page-content { margin: 20px auto; padding: 24px; border-radius: 20px; }
   }
 </style>
 </head>
 <body>
 <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
+<!-- CUSTOM MOUSE TRACKER -->
+<div class="mouse-tracker" id="tracker"></div>
+
 <nav>
   <a class="nav-logo" href="index.html" aria-label="Prime8Agency home">
     <img class="nav-logo-img" src="prime8agency-logo.png" alt="Prime8Agency Logo" />
-    <span class="nav-logo-text">PRIME8AGENCY</span>
+    <span class="nav-logo-text">PRIME8AGENCY.SITE</span>
   </a>
   <ul class="nav-links">
     <li><a href="index.html#services">Services</a></li>
@@ -310,7 +305,7 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="window.location='index.html#contact'">Book a Call</button>
+  <button class="nav-cta" onclick="openModal()">Claim Free Brand Audit</button>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
@@ -319,7 +314,7 @@
   <a href="creators.html" onclick="closeMenu()">Creators</a>
   <a href="index.html#about" onclick="closeMenu()">About</a>
   <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <button class="nav-cta" onclick="window.location='index.html#contact';closeMenu()">Book a Call</button>
+  <button class="nav-cta" onclick="openModal();closeMenu()">Claim Free Brand Audit</button>
 </div>
 
 <!-- HERO -->
@@ -330,8 +325,8 @@
       <h1 class="hero-h1">Work that converts.<br>Brands that <span class="italic">scale.</span></h1>
       <p class="hero-sub">Ad creatives, reel edits, landing pages, UGC campaigns, branding, and websites — built for eCommerce brands that want results and look premium.</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="window.location='index.html#contact'">Start a Project</button>
-        <a class="btn-secondary" href="creators.html">Creator Network</a>
+        <button class="btn-primary" onclick="openModal()">Claim Free Brand Audit</button>
+        <a class="btn-secondary" href="Prime8Agency_Portfolio_UGC.pdf" target="_blank" style="background:var(--ink); color:#fff; border-color:var(--ink);">Download UGC Portfolio (PDF)</a>
       </div>
     </div>
     <div class="hero-panel reveal tilt">
@@ -342,9 +337,9 @@
         </div>
         <div>
           <div class="panel-metrics">
-            <div class="panel-metric"><strong>5M+</strong><span>Creator Reach</span></div>
-            <div class="panel-metric"><strong>50M+</strong><span>Reel Views</span></div>
-            <div class="panel-metric"><strong>25+</strong><span>Network Creators</span></div>
+            <div class="panel-metric"><strong class="count-up" data-target="25" data-suffix="+">0</strong><span>Active Creators</span></div>
+            <div class="panel-metric"><strong class="count-up" data-target="5" data-suffix="M+">0</strong><span>Creator Reach</span></div>
+            <div class="panel-metric"><strong class="count-up" data-target="50" data-suffix="M+">0</strong><span>Reel Views</span></div>
           </div>
           <div class="panel-bar">
             <div class="pbar-row"><span class="pbar-label">Ad Creative</span><div class="pbar-track"><div class="pbar-fill" style="width:92%"></div></div></div>
@@ -381,16 +376,11 @@
     <div class="work-grid reveal" id="workGrid">
 
       <!-- Card 1: Reel Editing -->
-      <div class="work-card tilt" data-category="editing">
+      <div class="work-card tilt" data-category="editing" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-1">
           <div class="mock-wrap mock-dark">
-            <div class="mock-reel">
-              <div class="mock-reel-play">▶</div>
-              <div class="mock-reel-hook">"This Brand Was Dead.<br>We Fixed It."</div>
-              <div class="mock-reel-sub">Fast Cuts · Hook Optimized</div>
-            </div>
+            <img class="mock-img" src="https://sparvol.com/cdn/shop/files/short-form-timelines-hooks-723473.png?v=1747326559&width=1445" alt="Reel Editing">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">Reel Editing</span>
@@ -400,25 +390,11 @@
       </div>
 
       <!-- Card 2: Website -->
-      <div class="work-card tilt" data-category="web">
+      <div class="work-card tilt" data-category="web" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-2">
           <div class="mock-wrap mock-light">
-            <div class="mock-site">
-              <div class="mock-nav-bar">
-                <div class="mock-dot mock-dot-r"></div>
-                <div class="mock-dot mock-dot-y"></div>
-                <div class="mock-dot mock-dot-g"></div>
-                <div class="mock-url"></div>
-              </div>
-              <div class="mock-hero-block"><div class="mock-hero-text"></div></div>
-              <div class="mock-cards-row">
-                <div class="mock-mini-card"></div>
-                <div class="mock-mini-card"></div>
-                <div class="mock-mini-card"></div>
-              </div>
-            </div>
+             <img class="mock-img" src="https://swipepages.com/blog/wp-content/uploads/2025/05/7.png" alt="Landing Page">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">Website</span>
@@ -428,17 +404,11 @@
       </div>
 
       <!-- Card 3: Ad Creative -->
-      <div class="work-card tilt" data-category="ad">
+      <div class="work-card tilt" data-category="ad" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-3">
           <div class="mock-wrap mock-dark">
-            <div class="mock-poster">
-              <div class="mock-poster-eyebrow">Ad Creative · Meta</div>
-              <div class="mock-poster-line"></div>
-              <div class="mock-poster-title">Infinite Growth.<br>Intelligently Engineered.</div>
-              <div class="mock-poster-sub">Prime8Agency × Brand</div>
-            </div>
+             <img class="mock-img" src="https://slickgraphics256.com/wp-content/uploads/2025/05/qi1bjlwylidpshjvvqxm.jpg" alt="Ad Creative">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">Ad Creative</span>
@@ -448,22 +418,11 @@
       </div>
 
       <!-- Card 4: UGC -->
-      <div class="work-card tilt" data-category="ugc">
+      <div class="work-card tilt" data-category="ugc" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-4">
           <div class="mock-wrap mock-light">
-            <div class="mock-ugc">
-              <div class="mock-ugc-img"><span class="mock-ugc-tag">UGC · Skincare</span></div>
-              <div class="mock-ugc-row">
-                <div class="mock-ugc-pill"></div>
-                <div class="mock-ugc-pill" style="flex:1.5"></div>
-              </div>
-              <div class="mock-ugc-row">
-                <div class="mock-ugc-pill" style="flex:2"></div>
-                <div class="mock-ugc-pill"></div>
-              </div>
-            </div>
+             <img class="mock-img" src="https://www.ugcagency.in/assets/images/blogs/ugc-for-skincare-brands/h1.webp" alt="UGC Campaign">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">UGC Campaign</span>
@@ -473,29 +432,11 @@
       </div>
 
       <!-- Card 5: Video Edit -->
-      <div class="work-card tilt" data-category="editing">
+      <div class="work-card tilt" data-category="editing" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-5">
           <div class="mock-wrap mock-dark">
-            <div class="mock-edit">
-              <div class="mock-edit-screen"><span class="mock-edit-badge">Before → After</span></div>
-              <div class="mock-timeline">
-                <div class="mock-tl-row">
-                  <div class="mock-tl-clip mock-tl-v"></div>
-                  <div class="mock-tl-clip mock-tl-v" style="width:20%"></div>
-                  <div class="mock-tl-clip mock-tl-v" style="width:15%"></div>
-                </div>
-                <div class="mock-tl-row">
-                  <div class="mock-tl-clip mock-tl-a"></div>
-                  <div class="mock-tl-clip mock-tl-a" style="width:40%"></div>
-                </div>
-                <div class="mock-tl-row">
-                  <div class="mock-tl-clip mock-tl-t"></div>
-                  <div class="mock-tl-clip mock-tl-t" style="width:30%"></div>
-                </div>
-              </div>
-            </div>
+             <img class="mock-img" src="https://www.televisual.com/wp-content/uploads/text_based_editing.jpg" alt="Video Editing">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">Video Editing</span>
@@ -505,25 +446,11 @@
       </div>
 
       <!-- Card 6: Branding -->
-      <div class="work-card tilt" data-category="branding">
+      <div class="work-card tilt" data-category="branding" onclick="window.open('https://www.instagram.com/prime8agency.site','_blank')">
         <div class="work-thumb wbg-6">
           <div class="mock-wrap mock-light">
-            <div class="mock-brand">
-              <div class="mock-brand-logo">PRIME8AGENCY</div>
-              <div class="mock-brand-colors">
-                <div class="mock-swatch" style="background:#111114"></div>
-                <div class="mock-swatch" style="background:#3f4148"></div>
-                <div class="mock-swatch" style="background:#fbfaf7"></div>
-                <div class="mock-swatch" style="background:#e8e2d7"></div>
-              </div>
-              <div class="mock-brand-lines">
-                <div class="mock-brand-line"></div>
-                <div class="mock-brand-line w80"></div>
-                <div class="mock-brand-line w55"></div>
-              </div>
-            </div>
+            <img class="mock-img" src="https://www.columnfivemedia.com/wp-content/uploads/2025/09/brand-identity-brand-guide-copy.png" alt="Branding">
           </div>
-          <div class="work-overlay"><span class="overlay-pill">View Work</span></div>
         </div>
         <div class="work-info">
           <span class="work-tag">Branding</span>
@@ -542,20 +469,20 @@
     <div class="metrics-strip reveal">
       <div class="metrics-grid">
         <div class="metric-item">
-          <div class="metric-num">5M+</div>
-          <div class="metric-label">Combined Creator Reach</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-num">50M+</div>
-          <div class="metric-label">Reel Views Generated</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-num">25+</div>
+          <div class="metric-num"><span class="count-up" data-target="25" data-suffix="+">0</span></div>
           <div class="metric-label">Active Network Creators</div>
         </div>
         <div class="metric-item">
-          <div class="metric-num">8+</div>
+          <div class="metric-num"><span class="count-up" data-target="10" data-suffix="+">0</span></div>
           <div class="metric-label">Content Niches Covered</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-num"><span class="count-up" data-target="5" data-suffix="M+">0</span></div>
+          <div class="metric-label">Combined Creator Reach</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-num"><span class="count-up" data-target="50" data-suffix="M+">0</span></div>
+          <div class="metric-label">Reel Views Generated</div>
         </div>
       </div>
     </div>
@@ -607,7 +534,7 @@
         <div class="cta-label"><span></span>Ready to Scale?</div>
         <h2 class="cta-h2">Have a project in mind?</h2>
         <p class="cta-sub">Book a free strategy call and we'll map out how to grow your brand with creative systems that actually perform.</p>
-        <button class="btn-primary" onclick="window.location='index.html#contact'">Book a Free Call</button>
+        <button class="btn-primary" onclick="openModal()">Claim Free Brand Audit</button>
       </div>
     </div>
   </div>
@@ -618,9 +545,9 @@
   <div class="footer-grid">
     <div>
       <img class="footer-brand-img" src="prime8agency-logo.png" alt="Logo" />
-      <span class="footer-brand-name">PRIME8AGENCY</span>
+      <span class="footer-brand-name">PRIME8AGENCY.SITE</span>
       <p class="footer-brand-desc">AI-powered creative growth agency. Infinite growth, intelligently engineered.</p>
-      <div class="footer-social"><a class="social-icon" href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a></div>
+      <div class="footer-social"><a class="social-icon" href="https://www.instagram.com/prime8agency.site" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a></div>
     </div>
     <div>
       <div class="footer-col-title">Work</div>
@@ -639,31 +566,254 @@
         <li><a href="index.html#about">About</a></li>
         <li><a href="creators.html">Creator Network</a></li>
         <li><a href="index.html#process">Process</a></li>
+        <li><a href="Prime8Agency_Profile.pdf" target="_blank" style="color:var(--ink); font-weight:700;">Agency Profile (PDF)</a></li>
         <li><a href="index.html#contact">Contact</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Legal</div>
       <ul class="footer-links">
-        <li><a href="index.html" onclick="sessionStorage.setItem('openPage','privacy');return true;">Privacy Policy</a></li>
-        <li><a href="index.html" onclick="sessionStorage.setItem('openPage','terms');return true;">Terms & Conditions</a></li>
+        <li><a href="#" onclick="openPage('privacy');return false;">Privacy Policy</a></li>
+        <li><a href="#" onclick="openPage('terms');return false;">Terms & Conditions</a></li>
       </ul>
       <div style="margin-top:24px">
         <div class="footer-col-title">Contact</div>
         <ul class="footer-links">
           <li><a href="mailto:contact@prime8agency.site">contact@prime8agency.site</a></li>
-          <li><a href="https://www.instagram.com/prime8agency" target="_blank" rel="noopener">@prime8agency</a></li>
+          <li><a href="https://www.instagram.com/prime8agency.site" target="_blank" rel="noopener">@prime8agency.site</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-bottom-text">Copyright 2026 Prime8Agency. All rights reserved.</div>
-    <div class="footer-bottom-links"><a href="portfolio.html">Portfolio</a><a href="creators.html">Creators</a></div>
+    <div class="footer-bottom-text">Copyright 2026 Prime8Agency.site All rights reserved.</div>
+    <div class="footer-bottom-links"><a href="#" onclick="openPage('privacy');return false;">Privacy</a><a href="#" onclick="openPage('terms');return false;">Terms</a></div>
   </div>
 </footer>
 
+<!-- BRAND AUDIT MODAL -->
+<div class="modal-overlay" id="bookModal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">x</button>
+    <div id="formContainer">
+      <h2 class="modal-title">Get Your <span>Free Brand Audit</span></h2>
+      <p class="modal-sub">We'll review your brand, content, website, creator strategy, and growth opportunities — completely free.</p>
+      <div class="audit-benefits">
+        <span>✓ Content Audit</span>
+        <span>✓ Creator Marketing Audit</span>
+        <span>✓ Website & Conversion Audit</span>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="f-name">Full Name *</label>
+        <input class="form-input" type="text" id="f-name" placeholder="Your full name" oninput="clearError('name')" />
+        <div class="form-error" id="err-name">Please enter your name.</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="f-email">Email Address *</label>
+        <input class="form-input" type="email" id="f-email" placeholder="your@email.com" oninput="clearError('email')" />
+        <div class="form-error" id="err-email">Please enter a valid email address.</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="f-phone">Phone Number * (10 digits)</label>
+        <input class="form-input" type="tel" id="f-phone" placeholder="10-digit phone number" maxlength="10" oninput="clearError('phone');this.value=this.value.replace(/\D/g,'')" />
+        <div class="form-error" id="err-phone">Phone number must be exactly 10 digits.</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="f-business">Business Name *</label>
+        <input class="form-input" type="text" id="f-business" placeholder="Your brand or company name" oninput="clearError('business')" />
+        <div class="form-error" id="err-business">Please enter your business name.</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label" for="f-req">Tell Us About Your Requirements *</label>
+        <textarea class="form-textarea" id="f-req" placeholder="Describe your brand, goals, challenges, creator requirements, content needs, website requirements, or anything else you'd like us to help with." oninput="clearError('req')"></textarea>
+        <div class="form-error" id="err-req">Please provide your requirements.</div>
+      </div>
+      
+      <div class="form-notice">
+        <strong>⭐ IMPORTANT</strong><br>
+        This form is strictly for business inquiries and brand collaborations.<br>
+        If you are a creator looking to join Prime8Agency, please visit our Creator Network page instead.<br>
+        <a href="creators.html" style="color:var(--ink);font-weight:700;display:inline-block;margin-top:4px;">Go To Creator Network →</a>
+      </div>
+      
+      <button class="form-submit" onclick="submitForm()">Request Brand Audit</button>
+    </div>
+    
+    <div class="form-success" id="formSuccess">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Thank You!</div>
+      <div class="success-sub">We've received your request.<br>Our team will review your brand and send your free audit along with growth recommendations shortly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGAL PAGES OVERLAYS -->
+<div class="page-overlay" id="privacyPage">
+  <div class="page-content">
+    <button class="page-back" onclick="closePage('privacy')">← Back</button>
+    <h1 class="page-title">Privacy Policy</h1>
+    <div class="eyebrow" style="margin-bottom:24px;">Last updated: May 2026</div>
+    <div class="page-body">
+      <p>Prime8Agency ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or engage with our services.</p>
+      
+      <h3>1. Information We Collect</h3>
+      <p>We may collect personal information that you voluntarily provide when booking a call, contacting us, or engaging our services, including:</p>
+      <ul>
+        <li>Full name and contact details (email address, phone number)</li>
+        <li>Business name and information</li>
+        <li>Service inquiries and communication history</li>
+        <li>Payment information (processed securely via third-party providers)</li>
+        <li>Technical data such as IP address, browser type, and pages visited</li>
+      </ul>
+
+      <h3>2. How We Use Your Information</h3>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Respond to your inquiries and schedule strategy calls</li>
+        <li>Deliver and manage our services</li>
+        <li>Process payments and invoices</li>
+        <li>Send project updates and relevant communications</li>
+        <li>Improve our website and service offerings</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+
+      <h3>3. How We Share Your Information</h3>
+      <p>We do not sell, trade, or rent your personal information to third parties. We may share information with trusted service providers who assist us in operating our website and delivering services (such as email platforms, payment processors, and project management tools), under strict confidentiality agreements.</p>
+      <p>We may disclose information where required by law or to protect our legal rights.</p>
+
+      <h3>4. Data Security</h3>
+      <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of internet transmission is 100% secure.</p>
+
+      <h3>5. Third-Party Platforms</h3>
+      <p>Our services may involve third-party platforms including Meta, Instagram, Shopify, WordPress, and others. Your use of these platforms is governed by their respective privacy policies. We are not responsible for the privacy practices of these third parties.</p>
+
+      <h3>6. Cookies and Tracking</h3>
+      <p>Our website may use cookies and similar tracking technologies to enhance your experience. You can control cookie settings through your browser preferences.</p>
+
+      <h3>7. Data Retention</h3>
+      <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this policy, unless a longer retention period is required by law.</p>
+
+      <h3>8. Your Rights</h3>
+      <p>Depending on your location, you may have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at <a href="mailto:contact@prime8agency.site">contact@prime8agency.site</a>.</p>
+
+      <h3>9. Children's Privacy</h3>
+      <p>Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from minors.</p>
+
+      <h3>10. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the updated policy on our website with a revised date.</p>
+
+      <h3>11. Contact Us</h3>
+      <p>For any questions about this Privacy Policy, please contact us at <a href="mailto:support@prime8agency.site">support@prime8agency.site</a> or via Instagram at <a href="https://instagram.com/prime8agency.site" target="_blank">@prime8agency.site</a>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page-overlay" id="termsPage">
+  <div class="page-content">
+    <button class="page-back" onclick="closePage('terms')">← Back</button>
+    <h1 class="page-title">Terms & Conditions</h1>
+    <div class="eyebrow" style="margin-bottom:24px;">Commission, Marketing & Website Service Agreement</div>
+    <div class="page-body">
+      <p>By working with Prime8Agency, the client agrees to the following Terms & Conditions.</p>
+
+      <h3>1. Services Provided</h3>
+      <p>Prime8Agency provides services including but not limited to: creator collaborations, brand partnerships, lead generation, performance marketing, social media growth, ad creative production, video editing, Meta/Instagram advertising, website design & development, landing page creation, e-commerce store setup, and branding & digital strategy.</p>
+
+      <h3>2. Commission Structure</h3>
+      <p>Prime8Agency charges a 10% commission fee on every successful deal, collaboration, sale, partnership, or client acquisition generated through our creator network, outreach, advertising, marketing systems, or promotional campaigns. This applies to creator-brand collaborations, influencer campaigns, sales generated through our marketing efforts, and business opportunities sourced by Prime8Agency.</p>
+
+      <h3>3. Website & Development Payments</h3>
+      <p>Clients agree to pay the agreed project amount before final delivery, provide all required content and media on time, and review/approve website drafts within a reasonable timeframe.</p>
+
+      <h3>4. Ownership & Delivery</h3>
+      <p>Final website files, assets, and access credentials will only be transferred after full payment and clearing of all pending invoices. Prime8Agency reserves the right to temporarily suspend unfinished projects in case of non-payment.</p>
+
+      <h3>5. Payment Terms</h3>
+      <p>Payments must be completed according to the agreed invoice timeline. Late payments may result in delayed delivery, paused services, or cancellation of ongoing work.</p>
+
+      <h3>6. Revisions Policy</h3>
+      <p>Clients are entitled to reasonable revisions based on the selected service package. Major structural changes or requests outside the original scope may involve additional charges.</p>
+
+      <h3>7. No Guarantee Clause</h3>
+      <p>While Prime8Agency focuses on high-quality execution, we do not guarantee fixed revenue, guaranteed sales, guaranteed ad performance, guaranteed viral growth, or guaranteed conversion rates. Results depend on market conditions, product quality, audience behavior, competition, advertising budget, and client cooperation.</p>
+
+      <h3>8. Confidentiality</h3>
+      <p>Both parties agree to maintain confidentiality regarding pricing details, campaign strategies, creator information, private discussions, business data, and marketing systems.</p>
+
+      <h3>9. Portfolio Rights</h3>
+      <p>Prime8Agency reserves the right to showcase completed work in its portfolio, website, and social media for promotional purposes unless otherwise agreed upon in writing.</p>
+
+      <h3>10. Client Responsibilities</h3>
+      <p>The client agrees to provide accurate business information and assets on time, maintain professional communication, and ensure they possess legal rights to all provided content. Prime8Agency is not responsible for delays caused by lack of communication, missing assets, or incomplete information.</p>
+
+      <h3>11. Third-Party Services</h3>
+      <p>Prime8Agency may utilize third-party platforms (Meta Ads, Instagram, Shopify, WordPress, Canva, CapCut, hosting providers, etc.). Prime8Agency is not liable for platform outages, restrictions, account bans, policy changes, or technical failures. Third-party subscription costs are the client's responsibility unless otherwise agreed.</p>
+
+      <h3>12. Termination & Cancellation</h3>
+      <p>Either party may terminate the working relationship with written notice. Payments for completed work remain non-refundable. Active retainers must be canceled before the next billing cycle.</p>
+
+      <h3>13. Limitation of Liability</h3>
+      <p>Prime8Agency shall not be held liable for indirect losses, business interruptions, loss of profits, advertising performance fluctuations, or third-party service failures. All marketing efforts involve varying levels of risk.</p>
+
+      <h3>14. Acceptance of Terms</h3>
+      <p>By proceeding with Prime8Agency's services, the client confirms they have read, understood, and accepted all Terms & Conditions stated above.</p>
+    </div>
+  </div>
+</div>
+
 <script>
+// CUSTOM MOUSE TRACKER
+const tracker = document.getElementById('tracker');
+let mouseX = 0, mouseY = 0, trackerX = 0, trackerY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  const target = e.target;
+  if(target.tagName.toLowerCase() === 'a' || target.tagName.toLowerCase() === 'button' || target.closest('a') || target.closest('button') || target.closest('.work-card') || target.closest('.portfolio-card')) {
+    tracker.classList.add('hover-active');
+  } else {
+    tracker.classList.remove('hover-active');
+  }
+});
+function animateTracker() {
+  trackerX += (mouseX - trackerX) * 0.2;
+  trackerY += (mouseY - trackerY) * 0.2;
+  tracker.style.transform = `translate(${trackerX}px, ${trackerY}px)`;
+  requestAnimationFrame(animateTracker);
+}
+if(window.innerWidth > 768) { animateTracker(); }
+
+// NUMBER COUNTER ANIMATION (APPLE STYLE)
+const countElements = document.querySelectorAll('.count-up');
+const countObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseFloat(el.getAttribute('data-target'));
+            const suffix = el.getAttribute('data-suffix') || '';
+            const duration = 2000;
+            let start = null;
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const current = Math.floor(easeProgress * target);
+                el.innerText = current + suffix;
+                if (progress < 1) requestAnimationFrame(step);
+                else el.innerText = target + suffix;
+            }
+            requestAnimationFrame(step);
+            observer.unobserve(el);
+        }
+    });
+});
+countElements.forEach(el => countObserver.observe(el));
+
+// PARTICLES
 (function() {
   const canvas = document.getElementById('particle-canvas');
   const ctx = canvas.getContext('2d');
@@ -710,6 +860,63 @@ function filterWork(btn, filter) {
       card.style.display='none';
     }
   });
+}
+
+// MODAL CONTROLS
+function openModal(servicePreselect = '') { 
+  document.getElementById('bookModal').classList.add('active'); 
+  document.body.style.overflow = 'hidden'; 
+  if(servicePreselect) {
+    document.getElementById('f-req').value = `I am interested in the ${servicePreselect} pricing plan.`;
+  }
+}
+function closeModal() { document.getElementById('bookModal').classList.remove('active'); document.body.style.overflow = ''; }
+function handleOverlayClick(e) { if (e.target === document.getElementById('bookModal')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closePage('privacy'); closePage('terms'); } });
+function clearError(field) {
+  document.getElementById('err-' + field).classList.remove('show');
+  const input = document.getElementById('f-' + field);
+  if (input) input.classList.remove('error');
+}
+function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+function submitForm() {
+  let valid = true;
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { document.getElementById('err-name').classList.add('show'); document.getElementById('f-name').classList.add('error'); valid = false; }
+  const email = document.getElementById('f-email').value.trim();
+  if (!email || !validateEmail(email)) { document.getElementById('err-email').classList.add('show'); document.getElementById('f-email').classList.add('error'); valid = false; }
+  const phone = document.getElementById('f-phone').value.trim();
+  if (!phone || phone.length !== 10) { document.getElementById('err-phone').classList.add('show'); document.getElementById('f-phone').classList.add('error'); valid = false; }
+  
+  const business = document.getElementById('f-business').value.trim();
+  if (!business) { document.getElementById('err-business').classList.add('show'); document.getElementById('f-business').classList.add('error'); valid = false; }
+  
+  const req = document.getElementById('f-req').value.trim();
+  if (!req) { document.getElementById('err-req').classList.add('show'); document.getElementById('f-req').classList.add('error'); valid = false; }
+  
+  if (!valid) return;
+  const formData = { access_key: "2d814309-304b-4665-ac34-b5e4a2f492ad", subject: "New Brand Audit Request - Prime8Agency", from_name: name, replyto: email, Type: 'Brand Audit Request', Name: name, Email: email, Phone: phone, Business: business, Requirements: req };
+  
+  fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(formData) })
+    .then(res => res.json())
+    .then(data => { if (!data.success) alert('Something went wrong. Please email us at support@prime8agency.site'); })
+    .catch(() => { alert('Something went wrong. Please email us at support@prime8agency.site'); });
+    
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+}
+
+// LEGAL PAGE FUNCTIONS
+function openPage(page) { 
+  const id = page === 'privacy' ? 'privacyPage' : 'termsPage'; 
+  document.getElementById(id).classList.add('active'); 
+  document.body.style.overflow = 'hidden'; 
+}
+function closePage(page) { 
+  const id = page === 'privacy' ? 'privacyPage' : 'termsPage'; 
+  const el = document.getElementById(id); 
+  if (el) el.classList.remove('active'); 
+  document.body.style.overflow = ''; 
 }
 </script>
 </body>
