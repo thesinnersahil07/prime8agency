@@ -948,5 +948,14 @@ function submitForm() {
 function openPage(page) { const id = page === 'privacy' ? 'privacyPage' : 'termsPage'; document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
 function closePage(page) { const id = page === 'privacy' ? 'privacyPage' : 'termsPage'; const el = document.getElementById(id); if (el) el.classList.remove('active'); document.body.style.overflow = ''; }
 </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7L01J503GX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7L01J503GX');
+</script>
 </body>
 </html>
